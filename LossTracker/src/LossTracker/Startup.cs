@@ -43,10 +43,12 @@ namespace LossTracker
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<TrackerContext>();
+
+            services.AddTransient<TrackerContextSeedData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, TrackerContextSeedData seeder)
         {
             app.UseStaticFiles();
 
@@ -58,6 +60,8 @@ namespace LossTracker
                     defaults: new { controller = "App", Action = "Index" }
                     );
             });
+
+            seeder.EnsureSeedData();
         }
 
         // Entry point for the application.

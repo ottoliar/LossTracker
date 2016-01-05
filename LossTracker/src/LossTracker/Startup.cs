@@ -45,6 +45,7 @@ namespace LossTracker
                 .AddDbContext<TrackerContext>();
 
             services.AddTransient<TrackerContextSeedData>();
+            services.AddScoped<ITrackerRepository, TrackerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

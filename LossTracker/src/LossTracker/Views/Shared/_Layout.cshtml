@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LossTracker - @ViewBag.title</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="~/lib/bootswatch/superhero/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<body>
+    <div id="sidebar">
+        <img src="~/img/me.jpg" alt="headshot" class="headshot" />
+        <span id="username">ottoliar</span>
+        <ul class="nav">
+            <li class="active"><a asp-controller="App" asp-action="Index">Diary</a></li>
+            <li><a asp-controller="App" asp-action="Progress">Progress</a></li>
+            <li><a asp-controller="App" asp-action="Goals">Goals</a></li>
+            @*<li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>*@
+        </ul>
+    </div>
+
+    <div id="wrapper">
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button id="sidebar_toggle" class="btn btn-primary btn-sm">
+                            <i class="fa fa-angle-left"></i>
+                        </button>
+                    </li>
+                </ul>
+                <a asp-controller="App" asp-action="Index" class="navbar-brand">LossTracker</a>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="btn btn-sm btn-info">
+                            <i class="fa fa-save"></i> Save
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-sm btn-info">
+                            <i class="fa fa-print"></i> Print
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="main" class="container-fluid">
+
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+
+        <div id="footer" class="container-fluid">
+            <div class="navbar navbar-inverse navbar-fixed-bottom">
+                <h6 class="text-center text-info">&copy; 2015 Robert Ottolia</h6>
+                <h6 class="text-center text-info"><a href="https://github.com/ottoliar/losstracker">GitHub</a></h6>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <environment names="Development">
+        <script type="text/javascript" src="~/js/site.js"></script>
+    </environment>
+
+    <environment names="Production,Staging">
+        <script type="text/javascript" src="~/lib/_app/site.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", false)
+
+</body>
+
+</html>

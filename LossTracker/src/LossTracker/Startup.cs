@@ -10,6 +10,9 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using LossTracker.Models;
+using Microsoft.Extensions.Logging;
+using AutoMapper;
+using LossTracker.ViewModels;
 
 namespace LossTracker
 {
@@ -40,6 +43,8 @@ namespace LossTracker
                 opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            services.AddLogging();
+
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<TrackerContext>();
@@ -49,9 +54,16 @@ namespace LossTracker
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, TrackerContextSeedData seeder)
+        public void Configure(IApplicationBuilder app, TrackerContextSeedData seeder, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddDebug(LogLevel.Warning);
+
             app.UseStaticFiles();
+
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Food, FoodViewModel>().ReverseMap();
+            });
 
             app.UseMvc(config =>
             {

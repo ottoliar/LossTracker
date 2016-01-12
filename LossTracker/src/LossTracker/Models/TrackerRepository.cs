@@ -16,10 +16,28 @@ namespace LossTracker.Models
             _context = context;
             _logger = logger;
         }
-
+ 
         public void AddFood(Food newFood)
         {
             _context.Add(newFood);
+        }
+
+        public void AddDiaryEntry(string name, DiaryEntry newEntry)
+        {
+            _context.Profiles
+                .Where(p => p.UserName == name)
+                .FirstOrDefault()
+                .Entries
+                .Add(newEntry);
+        }
+
+        public void AddMeasurement(string name, Measurement newMeasurement)
+        {
+            _context.Profiles
+                .Where(p => p.UserName == name)
+                .FirstOrDefault()
+                .Measurements
+                .Add(newMeasurement);
         }
 
         public IEnumerable<Food> GetAllFoods()
@@ -35,7 +53,7 @@ namespace LossTracker.Models
             }
         }
 
-        public IEnumerable<Measurement> GetMeasurements(DateTime day, string name)
+        public IEnumerable<Measurement> GetMeasurements(string name)
         {
             try
             {
@@ -43,8 +61,7 @@ namespace LossTracker.Models
                                .Include(p => p.Measurements)
                                .Where(p => p.UserName == name)
                                .FirstOrDefault()
-                               .Measurements
-                               .Where(m => m.Created == day).ToList();
+                               .Measurements.ToList();
             }
             catch (Exception ex)
             {
@@ -53,7 +70,7 @@ namespace LossTracker.Models
             }
         }
 
-        public IEnumerable<DiaryEntry> GetDiaryEntries(DateTime day, string name)
+        public IEnumerable<DiaryEntry> GetDiaryEntries(DateTime date, string name)
         {
             try
             {
@@ -62,7 +79,7 @@ namespace LossTracker.Models
                                 .Where(p => p.UserName == name)
                                 .FirstOrDefault()
                                 .Entries
-                                .Where(e => e.Day == day).ToList();
+                                .Where(e => e.Day == date).ToList();
             }
             catch (Exception ex)
             {

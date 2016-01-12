@@ -1,7 +1,11 @@
-﻿using LossTracker.Models;
+﻿using AutoMapper;
+using LossTracker.Models;
+using LossTracker.ViewModels;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace LossTracker.Controllers.Api
 {
@@ -20,28 +24,38 @@ namespace LossTracker.Controllers.Api
         [HttpGet("")]
         public JsonResult Get()
         {
-            return Json(true);
+            return Json(Mapper.Map<IEnumerable<MeasurementViewModel>>
+                        (_repository.GetMeasurements("ottoliar")));
         }
 
-        [HttpGet("/measurements/{day}")]
-        public JsonResult GetMeasurements(DateTime day, string name)
+        [HttpPost("")]
+        public JsonResult Post([FromBody]MeasurementViewModel vm)
         {
             try
             {
-                var results = _repository.GetMeasurements(day, name);
-
-                if (results == null)
+                if (ModelState.IsValid)
                 {
-                    return Json(null);
-                }
+                    var newMeasurement = Mapper.Map<Measurement>(vm);
 
-                return Json(true);
+                    _logger.LogInformation("Saving new measurement...");
+                    _repository.AddMeasurement("ottoliar", newMeasurement);
+
+                    if (_repository.SaveAll())
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.Created;
+                        return Json(Mapper.Map<MeasurementViewModel>(newMeasurement));
+                    }
+                }
             }
             catch (Exception ex)
             {
-
-                return Json("Error occurred finding measurements.");
+                _logger.LogError("Failed to save new measurement to the database", ex);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
             }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
         }
     }
 }

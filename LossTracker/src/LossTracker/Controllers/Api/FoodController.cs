@@ -24,9 +24,8 @@ namespace LossTracker.Controllers.Api
         [HttpGet("")]
         public JsonResult Get()
         {
-            var results = Mapper.Map<IEnumerable<FoodViewModel>>(_repository.GetAllFoods());
+            return Json(Mapper.Map<IEnumerable<FoodViewModel>>(_repository.GetAllFoods()));
 
-            return Json(results);
         }
 
         [HttpPost("")]

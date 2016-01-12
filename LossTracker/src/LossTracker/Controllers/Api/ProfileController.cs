@@ -1,4 +1,6 @@
-﻿using LossTracker.Models;
+﻿using AutoMapper;
+using LossTracker.Models;
+using LossTracker.ViewModels;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +22,9 @@ namespace LossTracker.Controllers.Api
         [HttpGet("")]
         public JsonResult Get()
         {
-            return Json(true);
+            return Json(Mapper.Map<ProfileViewModel>(_repository.GetProfile("ottoliar")));
         }
+
+
     }
 }

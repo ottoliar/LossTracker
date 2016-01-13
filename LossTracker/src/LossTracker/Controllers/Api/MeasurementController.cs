@@ -10,7 +10,7 @@ using System.Net;
 namespace LossTracker.Controllers.Api
 {
     [Route("api/measurements")]
-    class MeasurementController : Controller
+    public class MeasurementController : Controller
     {
         private ILogger<MeasurementController> _logger;
         private ITrackerRepository _repository;

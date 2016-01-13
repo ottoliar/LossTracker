@@ -8,7 +8,7 @@ using System;
 namespace LossTracker.Controllers.Api
 {
     [Route("api/profile")]
-    class ProfileController : Controller
+    public class ProfileController : Controller
     {
         private ITrackerRepository _repository;
         private ILogger<ProfileController> _logger;

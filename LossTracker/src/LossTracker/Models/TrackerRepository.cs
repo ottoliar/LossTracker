@@ -40,6 +40,11 @@ namespace LossTracker.Models
                 .Add(newMeasurement);
         }
 
+        public void EditEntry(DiaryEntry entry)
+        {
+ 
+        }
+
         public IEnumerable<Food> GetAllFoods()
         {
             try
@@ -91,8 +96,8 @@ namespace LossTracker.Models
         public Profile GetProfile(string name)
         {
             return _context.Profiles
-                .Where(p => p.UserName == name)
-                .FirstOrDefault();
+                            .Where(p => p.UserName == name)
+                            .SingleOrDefault();
         }
 
         public bool SaveAll()

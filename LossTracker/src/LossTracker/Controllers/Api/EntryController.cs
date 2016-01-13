@@ -10,7 +10,7 @@ using System.Net;
 namespace LossTracker.Controllers.Api
 {
     [Route("api/entries/{date}")]
-    class EntryController : Controller
+    public class EntryController : Controller
     {
         private ILogger<EntryController> _logger;
         private ITrackerRepository _repository;
@@ -61,19 +61,33 @@ namespace LossTracker.Controllers.Api
         }
 
         [HttpPost("/edit")]
-        public JsonResult editPost([FromBody]EntryViewModel vm)
+        public JsonResult EditPost([FromBody]EntryViewModel vm)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                   
+                    var entry = Mapper.Map<DiaryEntry>(vm);
+
+                    _logger.LogInformation("Attempting to update entry...");
+                    _repository.EditEntry(entry);
+
+                    if (_repository.SaveAll())
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.Created;
+                        return Json(true);
+                    }
                 }
             }
             catch (Exception ex)
             {
-
+                _logger.LogError("Failed to save edited entry to the database", ex);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
             }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
         } 
 
     }

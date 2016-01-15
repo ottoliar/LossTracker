@@ -25,11 +25,18 @@ namespace LossTracker.Controllers.Api
             return Json(Mapper.Map<ProfileViewModel>(_repository.GetProfile("ottoliar")));
         }
 
-        //[HttpPost("")]
-        //public JsonResult Post()
-        //{
+        [HttpPost("")]
+        public JsonResult Post([FromBody]ProfileViewModel vm)
+        {
+            // Map the new profile
+            var newProfile = Mapper.Map<Models.Profile>(vm);
 
-        //}
+            _repository.UpdateProfile(newProfile, "ottoliar");
+
+            _repository.SaveAll();
+
+            return Json(true);          
+        }
 
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace LossTracker.Models
 {
@@ -43,6 +44,20 @@ namespace LossTracker.Models
         public void EditEntry(DiaryEntry entry)
         {
  
+        }
+
+        public void UpdateProfile(Profile newProfile, string name)
+        {
+            var oldProfile = GetProfile(name);
+
+            foreach (PropertyInfo prop in oldProfile.GetType().GetProperties())
+            {
+                // Update all fields except ID/UserName
+                if (prop.Name != "Id" && prop.Name != "UserName")
+                {
+                    prop.SetValue(oldProfile, prop.GetValue(newProfile));
+                }
+            }
         }
 
         public IEnumerable<Food> GetAllFoods()

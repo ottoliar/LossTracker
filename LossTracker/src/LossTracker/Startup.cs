@@ -63,6 +63,9 @@ namespace LossTracker
             Mapper.Initialize(config =>
             {
                 config.CreateMap<Food, FoodViewModel>().ReverseMap();
+                config.CreateMap<Measurement, MeasurementViewModel>().ReverseMap();
+                config.CreateMap<DiaryEntry, EntryViewModel>().ReverseMap();
+                config.CreateMap<Models.Profile, ProfileViewModel>().ReverseMap();
             });
 
             app.UseMvc(config =>

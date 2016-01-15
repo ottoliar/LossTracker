@@ -25,7 +25,7 @@ namespace LossTracker.Controllers.Api
         public JsonResult Get()
         {
             return Json(Mapper.Map<IEnumerable<MeasurementViewModel>>
-                        (_repository.GetMeasurements("ottoliar")));
+                (_repository.GetMeasurements("ottoliar")));
         }
 
         [HttpPost("")]

@@ -32,12 +32,12 @@ namespace LossTracker.Models
         }
 
         public void AddMeasurement(string name, Measurement newMeasurement)
-        {
+        {     
             _context.Profiles
                 .Where(p => p.UserName == name)
+                .Include(p => p.Measurements)
                 .FirstOrDefault()
-                .Measurements
-                .Add(newMeasurement);
+                .Measurements.Add(newMeasurement);
         }
 
         public void EditEntry(DiaryEntry entry)
@@ -95,7 +95,7 @@ namespace LossTracker.Models
 
         public Profile GetProfile(string name)
         {
-            return _context.Profiles
+            return  _context.Profiles
                             .Where(p => p.UserName == name)
                             .SingleOrDefault();
         }

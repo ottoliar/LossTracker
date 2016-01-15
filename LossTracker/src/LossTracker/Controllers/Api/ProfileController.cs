@@ -4,6 +4,7 @@ using LossTracker.ViewModels;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 
 namespace LossTracker.Controllers.Api
 {
@@ -28,14 +29,32 @@ namespace LossTracker.Controllers.Api
         [HttpPost("")]
         public JsonResult Post([FromBody]ProfileViewModel vm)
         {
-            // Map the new profile
-            var newProfile = Mapper.Map<Models.Profile>(vm);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Map new profile, and then supply username so old profile can be updated
+                    var newProfile = Mapper.Map<Models.Profile>(vm);
 
-            _repository.UpdateProfile(newProfile, "ottoliar");
+                    _logger.LogInformation("Updating profile...");
+                    _repository.UpdateProfile(newProfile, "ottoliar");
 
-            _repository.SaveAll();
+                    if (_repository.SaveAll())
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.Created;
+                        return Json(Mapper.Map<ProfileViewModel>(_repository.GetProfile("ottoliar")));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Failed to update profile.", ex);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
 
-            return Json(true);          
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
         }
 
     }

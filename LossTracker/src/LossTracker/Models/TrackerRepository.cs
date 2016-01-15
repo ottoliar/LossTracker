@@ -27,6 +27,7 @@ namespace LossTracker.Models
         {
             _context.Profiles
                 .Where(p => p.UserName == name)
+                .Include(p => p.Entries)
                 .FirstOrDefault()
                 .Entries
                 .Add(newEntry);
@@ -38,7 +39,8 @@ namespace LossTracker.Models
                 .Where(p => p.UserName == name)
                 .Include(p => p.Measurements)
                 .FirstOrDefault()
-                .Measurements.Add(newMeasurement);
+                .Measurements
+                .Add(newMeasurement);
         }
 
         public void EditEntry(DiaryEntry entry)
@@ -58,6 +60,13 @@ namespace LossTracker.Models
                     prop.SetValue(oldProfile, prop.GetValue(newProfile));
                 }
             }
+        }
+
+        public Food GetFood(int id)
+        {
+            return _context.Foods.
+                    Where(f => f.Id == id)
+                    .FirstOrDefault();
         }
 
         public IEnumerable<Food> GetAllFoods()
@@ -94,12 +103,20 @@ namespace LossTracker.Models
         {
             try
             {
-                return _context.Profiles
+                var result = _context.Profiles
                                 .Include(p => p.Entries)
                                 .Where(p => p.UserName == name)
                                 .FirstOrDefault()
                                 .Entries
-                                .Where(e => e.Day == date).ToList();
+                                .Where(e => e.Day.Date == date.Date)
+                                .ToList();
+
+                foreach (DiaryEntry entry in result)
+                {
+                    entry.Food = GetFood(entry.FoodId);
+                }
+
+                return result;                   
             }
             catch (Exception ex)
             {

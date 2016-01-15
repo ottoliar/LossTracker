@@ -37,6 +37,7 @@ namespace LossTracker.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
+                    vm.Food = _repository.GetFood(vm.FoodId);
                     var newEntry = Mapper.Map<DiaryEntry>(vm);
 
                     _logger.LogInformation("Attempting to save new entry...");
@@ -69,7 +70,7 @@ namespace LossTracker.Controllers.Api
                 {
                     var entry = Mapper.Map<DiaryEntry>(vm);
 
-                    _logger.LogInformation("Attempting to update entry...");
+                    _logger.LogInformation("Updating entry...");
                     _repository.EditEntry(entry);
 
                     if (_repository.SaveAll())

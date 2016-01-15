@@ -10,6 +10,7 @@ namespace LossTracker.Models
         void AddDiaryEntry(string name, DiaryEntry newEntry);
         void EditEntry(DiaryEntry entry);
         void UpdateProfile(Profile profile, string name);
+        Food GetFood(int id);
         IEnumerable<Food> GetAllFoods();
         IEnumerable<Measurement> GetMeasurements(string name);
         IEnumerable<DiaryEntry> GetDiaryEntries(DateTime day, string name);

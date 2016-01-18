@@ -1,0 +1,12 @@
+@model IEnumerable<LossTracker.Models.DiaryEntry>
+@{
+    ViewBag.Title = "Home Page";
+}
+<ul>
+    @foreach (var entry in Model)
+    {
+        <li>@entry.Day</li>
+        <li>@entry.Food</li>
+        <li>@entry.NumberOfServings</li>
+    }
+</ul>

@@ -33,6 +33,20 @@ namespace LossTracker.Models
                 .Add(newEntry);
         }
 
+        public void DeleteDiaryEntry(int id)
+        {
+            var entryToDelete = GetSingleEntry(id);
+
+            _context.Remove(entryToDelete);
+        }
+
+        public void DeleteMeasurement(int id)
+        {
+            var measurementToDelete = GetSingleMeasurement(id);
+
+            _context.Remove(measurementToDelete);
+        }
+
         public void AddMeasurement(string name, Measurement newMeasurement)
         {     
             _context.Profiles
@@ -43,21 +57,30 @@ namespace LossTracker.Models
                 .Add(newMeasurement);
         }
 
-        public void EditEntry(DiaryEntry entry)
+        public void EditEntry(DiaryEntry newEntry, int id)
         {
- 
+            var oldEntry = GetSingleEntry(id);
+
+            // Update all fields except ID/Date
+            foreach (PropertyInfo propertyInfo in oldEntry.GetType().GetProperties())
+            {
+                if (propertyInfo.Name != "Id" && propertyInfo.Name != "Day")
+                {
+                    propertyInfo.SetValue(oldEntry, propertyInfo.GetValue(newEntry));
+                }
+            }
         }
 
         public void UpdateProfile(Profile newProfile, string name)
         {
             var oldProfile = GetProfile(name);
 
-            foreach (PropertyInfo prop in oldProfile.GetType().GetProperties())
+            foreach (PropertyInfo propertyInfo in oldProfile.GetType().GetProperties())
             {
                 // Update all fields except ID/UserName
-                if (prop.Name != "Id" && prop.Name != "UserName")
+                if (propertyInfo.Name != "Id" && propertyInfo.Name != "UserName")
                 {
-                    prop.SetValue(oldProfile, prop.GetValue(newProfile));
+                    propertyInfo.SetValue(oldProfile, propertyInfo.GetValue(newProfile));
                 }
             }
         }
@@ -129,6 +152,20 @@ namespace LossTracker.Models
         {
             return  _context.Profiles
                             .Where(p => p.UserName == name)
+                            .SingleOrDefault();
+        }
+
+        public DiaryEntry GetSingleEntry(int id)
+        {
+            return _context.DiaryEntries
+                            .Where(e => e.Id == id)
+                            .SingleOrDefault();
+        }
+
+        public Measurement GetSingleMeasurement(int id)
+        {
+            return _context.Measurements
+                            .Where(e => e.Id == id)
                             .SingleOrDefault();
         }
 

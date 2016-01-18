@@ -1,4 +1,5 @@
 using LossTracker.Models;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using System.Linq;
 
@@ -14,6 +15,12 @@ namespace LossTracker.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Entries()
         {
             var foods = _repository.GetAllFoods();
 

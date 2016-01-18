@@ -1,10 +1,12 @@
-@model IEnumerable<LossTracker.Models.Food>
 @{ 
     ViewBag.Title = "Home Page";
 }
-<ul>
-    @foreach (var food in Model)
-    {
-        <li>@food.Description</li>
-    }
-</ul>
+<div class="row">
+
+    <div class="col-md-12">
+        <h1>Welcome to LossTracker</h1>
+        <p>This app will help you track your fitness and calorie goals</p>
+        <a asp-controller="App" asp-action="entries" class="btn btn-lg btn-success">My Diary</a>
+    </div>
+
+</div>

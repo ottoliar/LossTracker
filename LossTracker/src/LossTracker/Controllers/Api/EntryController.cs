@@ -61,8 +61,9 @@ namespace LossTracker.Controllers.Api
             return Json(new { message = "Failed", ModelState = ModelState });
         }
 
-        [HttpPost("/edit")]
-        public JsonResult EditPost([FromBody]EntryViewModel vm)
+        [HttpPost]
+        [Route("/api/edit/{id}")]
+        public JsonResult EditPost([FromBody]EntryViewModel vm, int id)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace LossTracker.Controllers.Api
                     var entry = Mapper.Map<DiaryEntry>(vm);
 
                     _logger.LogInformation("Updating entry...");
-                    _repository.EditEntry(entry);
+                    _repository.EditEntry(entry, id);
 
                     if (_repository.SaveAll())
                     {
@@ -90,6 +91,32 @@ namespace LossTracker.Controllers.Api
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { Message = "Failed", ModelState = ModelState });
         } 
+
+        [HttpPost]
+        [Route("/api/delete/entries/{id}")]
+        public JsonResult DeletePost(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Deleting entry from database...");
+                _repository.DeleteDiaryEntry(id);
+
+                if (_repository.SaveAll())
+                {
+                    Response.StatusCode = (int)HttpStatusCode.Created;
+                    return Json(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to delete entry from database");
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
+        }
 
     }
 }

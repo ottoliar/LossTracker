@@ -57,5 +57,31 @@ namespace LossTracker.Controllers.Api
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { Message = "Failed", ModelState = ModelState });
         }
+
+        [HttpPost]
+        [Route("/api/delete/measurements/{id}")]
+        public JsonResult DeletePost(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Deleting measurement from database...");
+                _repository.DeleteMeasurement(id);
+
+                if (_repository.SaveAll())
+                {
+                    Response.StatusCode = (int)HttpStatusCode.Created;
+                    return Json(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to delete measurement from database");
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
+        }
     }
 }

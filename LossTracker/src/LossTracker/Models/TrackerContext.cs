@@ -1,9 +1,10 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LossTracker.Models
 {
-    public class TrackerContext : DbContext
+    public class TrackerContext : IdentityDbContext<LossTrackerUser>
     {
         public TrackerContext()
         {

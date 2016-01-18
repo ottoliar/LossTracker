@@ -1,6 +1,7 @@
 using LossTracker.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using System;
 using System.Linq;
 
 namespace LossTracker.Controllers
@@ -22,9 +23,9 @@ namespace LossTracker.Controllers
         [Authorize]
         public IActionResult Entries()
         {
-            var foods = _repository.GetAllFoods();
+            var entries = _repository.GetDiaryEntries(DateTime.Today.Date, User.Identity.Name);
 
-            return View(foods);
+            return View(entries);
         }
 
         public IActionResult Progress()

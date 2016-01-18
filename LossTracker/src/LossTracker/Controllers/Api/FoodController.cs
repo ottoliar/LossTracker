@@ -1,6 +1,7 @@
 using AutoMapper;
 using LossTracker.Models;
 using LossTracker.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,7 @@ using System.Net;
 
 namespace LossTracker.Controllers.Api
 {
+    [Authorize]
     [Route("api/foods")]
     public class FoodController : Controller
     {

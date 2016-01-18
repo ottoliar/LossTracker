@@ -13,6 +13,10 @@ using LossTracker.Models;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using LossTracker.ViewModels;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Authentication.Cookies;
+using System.Net;
 
 namespace LossTracker
 {
@@ -36,12 +40,38 @@ namespace LossTracker
         {
             services.AddMvc(config =>
             {
-                // config.Filters.Add(new RequireHttpsAttribute());
+#if !DEBUG
+                config.Filters.Add(new RequireHttpsAttribute());
+#endif
             })
             .AddJsonOptions(opt =>
             {
                 opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
+
+            services.AddIdentity<LossTrackerUser, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents()
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == (int)HttpStatusCode.OK)
+                        {
+                            ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+
+                        return Task.FromResult(0);
+                    }
+                };
+            })
+            .AddEntityFrameworkStores<TrackerContext>();
 
             services.AddLogging();
 
@@ -54,11 +84,13 @@ namespace LossTracker
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, TrackerContextSeedData seeder, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, TrackerContextSeedData seeder, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddDebug(LogLevel.Warning);
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             Mapper.Initialize(config =>
             {
@@ -77,7 +109,7 @@ namespace LossTracker
                     );
             });
 
-            seeder.EnsureSeedData();
+           await seeder.EnsureSeedDataAsync();
         }
 
         // Entry point for the application.

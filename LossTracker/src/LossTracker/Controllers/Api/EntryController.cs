@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LossTracker.Models;
 using LossTracker.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,7 @@ using System.Net;
 
 namespace LossTracker.Controllers.Api
 {
+    [Authorize]
     [Route("api/entries/{date}")]
     public class EntryController : Controller
     {
@@ -26,8 +28,16 @@ namespace LossTracker.Controllers.Api
         {
             // DateTime date mm/dd/yyyy
             DateTime dateTime = Convert.ToDateTime(date);
+            var result = Mapper.Map<IEnumerable<EntryViewModel>>(_repository.GetDiaryEntries(dateTime, User.Identity.Name));
 
-            return Json(Mapper.Map<IEnumerable<EntryViewModel>>(_repository.GetDiaryEntries(dateTime, "ottoliar")));
+            if (result != null)
+            {
+                return Json(result);
+            }
+            else
+            {
+                return Json(null);
+            }
         }
 
         [HttpPost("")]
@@ -41,7 +51,7 @@ namespace LossTracker.Controllers.Api
                     var newEntry = Mapper.Map<DiaryEntry>(vm);
 
                     _logger.LogInformation("Attempting to save new entry...");
-                    _repository.AddDiaryEntry("ottoliar", newEntry);
+                    _repository.AddDiaryEntry(User.Identity.Name, newEntry);
 
                     if (_repository.SaveAll())
                     {
@@ -61,6 +71,7 @@ namespace LossTracker.Controllers.Api
             return Json(new { message = "Failed", ModelState = ModelState });
         }
 
+        [Authorize]
         [HttpPost]
         [Route("/api/edit/{id}")]
         public JsonResult EditPost([FromBody]EntryViewModel vm, int id)
@@ -92,6 +103,7 @@ namespace LossTracker.Controllers.Api
             return Json(new { Message = "Failed", ModelState = ModelState });
         } 
 
+        [Authorize]
         [HttpPost]
         [Route("/api/delete/entries/{id}")]
         public JsonResult DeletePost(int id)

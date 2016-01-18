@@ -1,20 +1,35 @@
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LossTracker.Models
 {
     public class TrackerContextSeedData
     {
         private TrackerContext _context;
+        private UserManager<LossTrackerUser> _userManager;
 
-        public TrackerContextSeedData(TrackerContext context)
+        public TrackerContextSeedData(TrackerContext context, UserManager<LossTrackerUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public void EnsureSeedData()
+        public async Task EnsureSeedDataAsync()
         {
+            if (await _userManager.FindByEmailAsync("ottoliarobert@gmail.com") == null)
+            {
+                var newUser = new LossTrackerUser()
+                {
+                    UserName = "ottoliar",
+                    Email = "ottoliarobert@gmail.com"
+                };
+
+                await _userManager.CreateAsync(newUser, "testP@ssw0rd");
+            }
+
             if (!_context.Foods.Any())
             {
                 var seedFoods = new List<Food>
@@ -33,6 +48,7 @@ namespace LossTracker.Models
 
                 _context.SaveChanges();
             }
+
         }
     }
 }

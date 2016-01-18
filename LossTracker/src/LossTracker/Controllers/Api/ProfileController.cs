@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LossTracker.Models;
 using LossTracker.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,6 +9,7 @@ using System.Net;
 
 namespace LossTracker.Controllers.Api
 {
+    [Authorize]
     [Route("api/profile")]
     public class ProfileController : Controller
     {
@@ -23,7 +25,16 @@ namespace LossTracker.Controllers.Api
         [HttpGet("")]
         public JsonResult Get()
         {
-            return Json(Mapper.Map<ProfileViewModel>(_repository.GetProfile("ottoliar")));
+            var result = Mapper.Map<ProfileViewModel>(_repository.GetProfile(User.Identity.Name)));
+
+            if (result != null)
+            {
+                return Json(result);
+            }
+            else
+            {
+                return Json(null);
+            }
         }
 
         [HttpPost("")]
@@ -37,12 +48,12 @@ namespace LossTracker.Controllers.Api
                     var newProfile = Mapper.Map<Models.Profile>(vm);
 
                     _logger.LogInformation("Updating profile...");
-                    _repository.UpdateProfile(newProfile, "ottoliar");
+                    _repository.UpdateProfile(newProfile, User.Identity.Name);
 
                     if (_repository.SaveAll())
                     {
                         Response.StatusCode = (int)HttpStatusCode.Created;
-                        return Json(Mapper.Map<ProfileViewModel>(_repository.GetProfile("ottoliar")));
+                        return Json(Mapper.Map<ProfileViewModel>(_repository.GetProfile(User.Identity.Name)));
                     }
                 }
             }

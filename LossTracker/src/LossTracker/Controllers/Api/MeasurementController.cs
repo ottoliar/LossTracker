@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LossTracker.Models;
 using LossTracker.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,7 @@ using System.Net;
 
 namespace LossTracker.Controllers.Api
 {
+    [Authorize]
     [Route("api/measurements")]
     public class MeasurementController : Controller
     {
@@ -24,8 +26,17 @@ namespace LossTracker.Controllers.Api
         [HttpGet("")]
         public JsonResult Get()
         {
-            return Json(Mapper.Map<IEnumerable<MeasurementViewModel>>
-                (_repository.GetMeasurements("ottoliar")));
+            var result = (Mapper.Map<IEnumerable<MeasurementViewModel>>
+                         (_repository.GetMeasurements(User.Identity.Name)));
+
+            if (result != null)
+            {
+                return Json(result);
+            }
+            else
+            {
+                return Json(null);
+            }
         }
 
         [HttpPost("")]
@@ -38,7 +49,7 @@ namespace LossTracker.Controllers.Api
                     var newMeasurement = Mapper.Map<Measurement>(vm);
 
                     _logger.LogInformation("Saving new measurement...");
-                    _repository.AddMeasurement("ottoliar", newMeasurement);
+                    _repository.AddMeasurement(User.Identity.Name, newMeasurement);
 
                     if (_repository.SaveAll())
                     {
@@ -58,6 +69,7 @@ namespace LossTracker.Controllers.Api
             return Json(new { Message = "Failed", ModelState = ModelState });
         }
 
+        [Authorize]
         [HttpPost]
         [Route("/api/delete/measurements/{id}")]
         public JsonResult DeletePost(int id)

@@ -25,7 +25,7 @@ namespace LossTracker.Controllers.Api
         [HttpGet("")]
         public JsonResult Get()
         {
-            var result = Mapper.Map<ProfileViewModel>(_repository.GetProfile(User.Identity.Name)));
+            var result = Mapper.Map<ProfileViewModel>(_repository.GetProfile(User.Identity.Name));
 
             if (result != null)
             {

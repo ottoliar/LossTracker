@@ -75,12 +75,21 @@ namespace LossTracker.Models
         {
             var oldProfile = GetProfile(name);
 
-            foreach (PropertyInfo propertyInfo in oldProfile.GetType().GetProperties())
+            // Create new profile if none exists; otherwise update the old to match the new
+            if (oldProfile == null)
             {
-                // Update all fields except ID/UserName
-                if (propertyInfo.Name != "Id" && propertyInfo.Name != "UserName")
+                newProfile.UserName = name;
+                _context.Profiles.Add(newProfile);
+            }
+            else
+            {
+                foreach (PropertyInfo propertyInfo in oldProfile.GetType().GetProperties())
                 {
-                    propertyInfo.SetValue(oldProfile, propertyInfo.GetValue(newProfile));
+                    // Update all fields except ID/UserName
+                    if (propertyInfo.Name != "Id" && propertyInfo.Name != "UserName")
+                    {
+                        propertyInfo.SetValue(oldProfile, propertyInfo.GetValue(newProfile));
+                    }
                 }
             }
         }
@@ -152,7 +161,7 @@ namespace LossTracker.Models
         {
             return  _context.Profiles
                             .Where(p => p.UserName == name)
-                            .SingleOrDefault();
+                            .SingleOrDefault(null);
         }
 
         public DiaryEntry GetSingleEntry(int id)

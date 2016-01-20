@@ -109,7 +109,7 @@ namespace LossTracker
                     );
             });
 
-           await seeder.EnsureSeedDataAsync();
+            await seeder.EnsureSeedDataAsync();
         }
 
         // Entry point for the application.

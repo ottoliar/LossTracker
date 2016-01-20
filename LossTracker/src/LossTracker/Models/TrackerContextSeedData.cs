@@ -46,9 +46,38 @@ namespace LossTracker.Models
                     _context.Foods.Add(food);
                 }
 
-                _context.SaveChanges();
-            }
+                var seedProfile = new Profile()
+                {
+                    UserName = "ottoliar",
+                    CalorieGoal = 2300,
+                    ProteinGoal = 170,
+                    FatGoal = 90,
+                    CarbGoal = 180,
+                    Measurements = new List<Measurement>(),
+                    Entries = new List<DiaryEntry>()
+                };
 
+                var seedMeasurement = new Measurement()
+                {
+                    Created = Convert.ToDateTime("01/04/2016"),
+                    WeightLbs = 205,
+                    WaistInches = 38
+                };
+
+                var seedEntry = new DiaryEntry()
+                {
+                    Day = DateTime.Today.Date,
+                    NumberOfServings = 2,
+                    FoodId = 1,
+                    Food = _context.Foods.Where(f => f.Id == 1).FirstOrDefault()
+                };
+
+                seedProfile.Measurements.Add(seedMeasurement);
+                seedProfile.Entries.Add(seedEntry);
+
+                 _context.Profiles.Add(seedProfile);
+                 _context.SaveChanges();
+            }
         }
     }
 }

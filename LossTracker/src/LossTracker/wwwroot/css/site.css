@@ -16,6 +16,24 @@
     font-weight: bold;
 }
 
+#searchbar {
+    float: right;
+    margin-right: 6px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    color: coral;
+}
+
+input[placeholder] {
+    font-weight: bold;
+    border-color: blue;
+}
+
+input[placeholder]:focus {
+    border-color: coral;
+}
+
 #sidebar {
     background: #2a2c36;
     color: #eee;

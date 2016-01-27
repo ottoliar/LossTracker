@@ -1,11 +1,76 @@
-@model IEnumerable<LossTracker.Models.DiaryEntry>
+@model IEnumerable<LossTracker.ViewModels.EntryViewModel>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Nutrition Diary";
 }
-<ul>
-    @foreach (var entry in Model)
-    {
-        <li>@entry.Food.Description</li>
-        <li>@entry.NumberOfServings</li>
-    }
-</ul>
+@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/js/searchController.js"></script>
+}
+
+<div class="row">
+
+    <div class="col-md-6">
+        <h2>Food Diary</h2>
+
+        <div ng-app="instantSearch" ng-controller="instantSearchCtrl">
+            <input ng-model="search" ng-model-options="{ debounce: 200 }" onclick="select()" class="form-control" type="text" placeholder="Add Food..." />
+            <span id="searchbar" class="fa fa-search"></span>
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Calories
+                    </th>
+                </tr>
+                <tr ng-repeat="food in details">
+                    <td>{{ food.description }}</td>
+                    <td>{{ food.calories }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div id="macro">
+
+            <h2>Macronutrients</h2>
+
+            <div id="piechart">
+
+            </div>
+
+            <div id="macroTable">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td>Consumed</td>
+                            <td>Goal</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Carbohydrates</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Protein</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Fat</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>

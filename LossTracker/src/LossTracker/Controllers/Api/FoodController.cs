@@ -23,11 +23,10 @@ namespace LossTracker.Controllers.Api
             _logger = logger;
         }
 
-        [HttpGet("")]
-        public JsonResult Get()
+        [HttpGet("{queryString}")]
+        public JsonResult Get(string queryString)
         {
-            return Json(Mapper.Map<IEnumerable<FoodViewModel>>(_repository.GetAllFoods()));
-
+            return Json(Mapper.Map<IEnumerable<FoodViewModel>>(_repository.SearchFoods(queryString)));
         }
 
         [HttpPost("")]

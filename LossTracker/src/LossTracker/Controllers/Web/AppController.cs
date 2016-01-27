@@ -1,7 +1,10 @@
+using AutoMapper;
 using LossTracker.Models;
+using LossTracker.ViewModels;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LossTracker.Controllers
@@ -25,7 +28,7 @@ namespace LossTracker.Controllers
         {
             var entries = _repository.GetDiaryEntries(DateTime.Today.Date, User.Identity.Name);
 
-            return View(entries);
+            return View(Mapper.Map<IEnumerable<EntryViewModel>>(entries));
         }
 
         public IActionResult Progress()

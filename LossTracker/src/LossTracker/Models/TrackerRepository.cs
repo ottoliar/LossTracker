@@ -101,60 +101,37 @@ namespace LossTracker.Models
                     .FirstOrDefault();
         }
 
-        public IEnumerable<Food> GetAllFoods()
+        public IEnumerable<Food> SearchFoods(string query)
         {
-            try
-            {
-                return _context.Foods.OrderBy(f => f.Calories).ToList();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Could not get trips from database", ex);
-                return null;
-            }
+            return _context.Foods
+                            .Where(f => f.Description.Contains(query));
         }
 
         public IEnumerable<Measurement> GetMeasurements(string name)
         {
-            try
-            {
-                return _context.Profiles
+            return _context.Profiles
                                .Include(p => p.Measurements)
                                .Where(p => p.UserName == name)
                                .FirstOrDefault()
                                .Measurements.ToList();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Could not get measurements from database", ex);
-                return null;
-            }
         }
 
         public IEnumerable<DiaryEntry> GetDiaryEntries(DateTime date, string name)
         {
-            try
-            {
-                var result = _context.Profiles
-                                .Include(p => p.Entries)
-                                .Where(p => p.UserName == name)
-                                .FirstOrDefault()
-                                .Entries
-                                .Where(e => e.Day.Date == date.Date)
-                                .ToList();
+            var result = _context.Profiles
+                            .Include(p => p.Entries)
+                            .Where(p => p.UserName == name)
+                            .FirstOrDefault()
+                            .Entries
+                            .Where(e => e.Day.Date == date.Date)
+                            .ToList();
 
-                foreach (DiaryEntry entry in result)
-                {
-                    entry.Food = GetFood(entry.FoodId);
-                }
-
-                return result;                   
-            }
-            catch (Exception ex)
+            foreach (DiaryEntry entry in result)
             {
-                _logger.LogError("Could not retrieve diary entries from the database", ex);
-                return null;
+                entry.Food = GetFood(entry.FoodId);
             }
+
+            return result;                   
         }
 
         public Profile GetProfile(string name)

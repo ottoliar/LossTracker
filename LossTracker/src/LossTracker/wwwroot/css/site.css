@@ -4,6 +4,10 @@
     padding: 3px;
 }
 
+.hideId {
+    display: none;
+}
+
 .menu {
     font-size: 12px;
 }
@@ -14,6 +18,10 @@
 
 .menu li.active {
     font-weight: bold;
+}
+
+thead tr td {
+    color: coral;
 }
 
 #searchbar {

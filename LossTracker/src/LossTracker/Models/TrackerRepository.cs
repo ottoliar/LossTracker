@@ -138,7 +138,7 @@ namespace LossTracker.Models
         {
             return  _context.Profiles
                             .Where(p => p.UserName == name)
-                            .SingleOrDefault(null);
+                            .SingleOrDefault();
         }
 
         public DiaryEntry GetSingleEntry(int id)

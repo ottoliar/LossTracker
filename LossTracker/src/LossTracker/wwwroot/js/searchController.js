@@ -3,29 +3,34 @@
 
     'use strict';
 
-    angular.module('instantSearch', ['ngAnimate', 'mgcrea.ngStrap'])
-            .controller('instantSearchCtrl', function ($scope, $http) {
+    angular.module('appDiary')
+        .controller('InstantSearchCtrl', ["$scope", "$http", function($scope, $http) {
 
-                var url = '/api/foods/';
+            var url = '/api/foods/';
 
-                $scope.$watch('search', function () {
-                    fetch();
-                });
-
-                function fetch() {
-                    if ($scope.details === undefined || $scope.search.length !== 0) {
-                        var queryUrl = url + $scope.search;
-                        $http.get(queryUrl).then(function (response) {
-                            $scope.details = response.data;
-                        });
-                    } else {
-                        $scope.details = undefined;
-                    }
-                }
-
-                $scope.select = function () {
-                    this.setSelectionRange(0, this.value.length);
-                }
+            $scope.$watch('search', function() {
+                fetchFoods();
             });
+
+            function fetchFoods() {
+                if ($scope.details === undefined || $scope.search.length !== 0) {
+                    var queryUrl = url + $scope.search;
+                    $http.get(queryUrl).then(function(response) {
+                        $scope.details = response.data;
+                    });
+                } else {
+                    $scope.details = undefined;
+                }
+            }
+
+            $scope.addFood = function(id) {
+                //console.log(id);
+            };
+
+            $scope.select = function() {
+                this.setSelectionRange(0, this.value.length);
+            }
+
+     }]);
 
 })();

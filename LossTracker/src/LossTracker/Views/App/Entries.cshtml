@@ -1,4 +1,3 @@
-@model IEnumerable<LossTracker.ViewModels.EntryViewModel>
 @{
     ViewBag.Title = "Food Diary";
 }
@@ -7,13 +6,15 @@
     <script src="~/lib/angular-animate/angular-animate.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.min.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="~/js/appDiary.js"></script>
     <script src="~/js/searchController.js"></script>
+    <script src="~/js/macroController.js"></script>
 }
 
-<div class="row">
+<div class="row" ng-app="appDiary">
     <div class="col-md-6">
         <h2>Food Search</h2>
-        <div ng-app="instantSearch" ng-controller="instantSearchCtrl">
+        <div ng-controller="InstantSearchCtrl">
             <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..."/>
             <span id="searchbar" class="fa fa-search"></span>
             <table class="table table-responsive table-striped">
@@ -33,7 +34,7 @@
                         <i>Fat: </i> {{ food.fatGrams }}g
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-xs">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="addFood(food.id)">
                             Add
                         </button>
                     </td>
@@ -44,41 +45,54 @@
         <div id="diaryMain">
             <h2>Food Diary</h2>
         </div>
+
     </div>
 
     <div class="col-md-5">
-        <div id="macro">
+        <div id="macro" ng-controller="MacroController">
 
-            <h2>Macronutrients</h2>
+            <h2>Calories & Macronutrients</h2>
 
-            <div id="piechart">
-
-            </div>
+            <div id="piechart"></div>
 
             <div id="macroTable">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <td>Macros</td>
+                            <td>Calorie Goal</td>
                             <td>Consumed</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ profileMacros.calorieGoal }}</td>
+                            <td>{{ consumed.calories }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Macros</td>
                             <td>Goal</td>
+                            <td>Consumed</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Carbohydrates</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ profileMacros.carbGoal }}g</td>
+                            <td>{{ consumed.carbs }}g</td>
                         </tr>
                         <tr>
                             <td>Protein</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ profileMacros.proteinGoal }}g</td>
+                            <td>{{ consumed.protein }}g</td>
                         </tr>
                         <tr>
                             <td>Fat</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ profileMacros.fatGoal }}g</td>
+                            <td>{{ consumed.fat }}g</td>
                         </tr>
                     </tbody>
                 </table>

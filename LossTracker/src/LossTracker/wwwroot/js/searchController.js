@@ -12,8 +12,8 @@
                 fetchFoods();
             });
 
-            $scope.addFood = function (id, numServings) {
-                diaryTracker.addFood(id, numServings)
+            $scope.addDiaryEntry = function (FoodId, numServings) {
+                diaryTracker.addDiaryEntry(FoodId, numServings)
                             .then(onAdd, onError);
             };
 
@@ -41,6 +41,9 @@
             $scope.select = function () {
                 this.setSelectionRange(0, this.value.length);
             }
+
+            diaryTracker.syncWithDatabase();
+            diaryTracker.addDiaryEntry(1, 3);
 
      });
 

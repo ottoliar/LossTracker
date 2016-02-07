@@ -18,9 +18,17 @@
             fatGrams: 0
         };
 
+        // Updates totals in consumedThusFar 
+        // by adding the specific values of food passed in
+        function updateTotals(objToUpdate, food) {
+            for (var key in objToUpdate) {
+                objToUpdate[key] += food[key];
+            }
+        }
+
         // Pulls entries from the given date from the database
         // Updates the consumedThusFar with totals
-        var updateDiary = function () {
+        var syncWithDatabase = function () {
             $http.get(todayEntriesUrl)
                  .then(function (response) {
 
@@ -28,16 +36,14 @@
                          // response.data is an array of objects 
                          // containing diary entries. Get the food details to update diary.
                          var food = dbEntry['food'];
-                         for (var key in consumedThusFar) {
-                             consumedThusFar[key] += food[key];
-                         }
+                         updateTotals(consumedThusFar, food);
                      });                  
 
                  });
         };
 
         // Will update the above object using methods below
-        var addFood = function (id, numServings) {
+        var addDiaryEntry = function (id, numServings) {
             // Create new entry using user's data
             var entryToAdd = {
                 FoodId: id,
@@ -46,14 +52,16 @@
 
             $http.post(todayEntriesUrl, JSON.stringify(entryToAdd))
                         .then(function (response) {
-                            updateDiary();
+                            // Add the newly posted entry to our running totals
+                            var food = response.data['food'];
+                            updateTotals(consumedThusFar, food);
                             return response.data;
                         });
         };
 
         return {
-            addFood: addFood,
-            updateDiary: updateDiary,
+            addDiaryEntry: addDiaryEntry,
+            syncWithDatabase: syncWithDatabase
         };
     }
 

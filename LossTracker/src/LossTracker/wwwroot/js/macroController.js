@@ -15,7 +15,6 @@
                 }
 
                 fetchProfile();
-                diaryTracker.updateDiary();
             });
 
 })();

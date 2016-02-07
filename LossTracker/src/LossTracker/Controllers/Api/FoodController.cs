@@ -45,7 +45,7 @@ namespace LossTracker.Controllers.Api
                     if (_repository.SaveAll())
                     {
                         Response.StatusCode = (int)HttpStatusCode.Created;
-                        return Json(Mapper.Map<FoodViewModel>(newFood));
+                        return Json(true);
                     }
                 }
             }

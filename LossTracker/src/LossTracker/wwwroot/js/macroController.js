@@ -4,7 +4,7 @@
     'use strict';
 
     angular.module('appDiary')
-            .controller('MacroController', ["$scope", "$http", function($scope, $http) {
+            .controller('MacroController', function($scope, $http, diaryTracker) {
 
                 var url = '/api/profile/';
 
@@ -14,14 +14,8 @@
                     });
                 }
 
-                $scope.consumed = {
-                    calories: 0,
-                    carbs: 0,
-                    protein: 0,
-                    fat: 0
-                };
-
                 fetchProfile();
-            }]);
+                diaryTracker.updateDiary();
+            });
 
 })();

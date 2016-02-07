@@ -6,7 +6,8 @@
     <script src="~/lib/angular-animate/angular-animate.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.min.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
-    <script src="~/js/appDiary.js"></script>
+    <script src="~/js/appDiaryInit.js"></script>
+    <script src="~/js/diaryTrackerService.js"></script>
     <script src="~/js/searchController.js"></script>
     <script src="~/js/macroController.js"></script>
 }
@@ -82,17 +83,17 @@
                         <tr>
                             <td>Carbohydrates</td>
                             <td>{{ profileMacros.carbGoal }}g</td>
-                            <td>{{ consumed.carbs }}g</td>
+                            <td>{{  }}g</td>
                         </tr>
                         <tr>
                             <td>Protein</td>
                             <td>{{ profileMacros.proteinGoal }}g</td>
-                            <td>{{ consumed.protein }}g</td>
+                            <td>{{  }}g</td>
                         </tr>
                         <tr>
                             <td>Fat</td>
                             <td>{{ profileMacros.fatGoal }}g</td>
-                            <td>{{ consumed.fat }}g</td>
+                            <td>{{  }}g</td>
                         </tr>
                     </tbody>
                 </table>

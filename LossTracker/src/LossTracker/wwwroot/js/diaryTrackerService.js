@@ -19,31 +19,45 @@
         };
 
         // Updates totals in consumedThusFar 
-        // by adding the specific values of food passed in
-        function updateTotals(objToUpdate, food) {
-            for (var key in objToUpdate) {
-                objToUpdate[key] += food[key];
+        // by adding the specific values of food passed in 
+        function updateTotals(food, numServings) {
+            for (var key in consumedThusFar) {
+                consumedThusFar[key] += (food[key]*numServings);
             }
         }
 
+        // Return the latest macro state of today's diary
+        var getLatestDiaryMacros = function () {
+            return consumedThusFar;
+        };
+
+        // Get all of the latest diary entries
+        var getEntriesForToday = function () {
+            return $http.get(todayEntriesUrl)
+                  .then(function (response) {
+                      return response.data;
+                  });
+        };
+
         // Pulls entries from the given date from the database
         // Updates the consumedThusFar with totals
-        var syncWithDatabase = function () {
+        var syncWithDatabase = function (_callback) {
             $http.get(todayEntriesUrl)
                  .then(function (response) {
-
                      angular.forEach(response.data, function (dbEntry) {
                          // response.data is an array of objects 
                          // containing diary entries. Get the food details to update diary.
                          var food = dbEntry['food'];
-                         updateTotals(consumedThusFar, food);
-                     });                  
+                         var numServings = dbEntry['numberOfServings'];
+                         updateTotals(food, numServings);
+                     });
 
+                     _callback();
                  });
         };
 
         // Will update the above object using methods below
-        var addDiaryEntry = function (id, numServings) {
+        var addDiaryEntry = function (id, numServings, _callback) {
             // Create new entry using user's data
             var entryToAdd = {
                 FoodId: id,
@@ -54,14 +68,19 @@
                         .then(function (response) {
                             // Add the newly posted entry to our running totals
                             var food = response.data['food'];
-                            updateTotals(consumedThusFar, food);
-                            return response.data;
+                            var numServings = response.data['numberOfServings'];
+                            // Update the running total with the newly added food
+                            updateTotals(food, numServings);
                         });
+
+            _callback();
         };
 
         return {
             addDiaryEntry: addDiaryEntry,
-            syncWithDatabase: syncWithDatabase
+            syncWithDatabase: syncWithDatabase,
+            getLatestDiaryMacros: getLatestDiaryMacros,
+            getEntriesForToday: getEntriesForToday
         };
     }
 

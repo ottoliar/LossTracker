@@ -6,6 +6,7 @@
     <script src="~/lib/angular-animate/angular-animate.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.min.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="~/js/simpleControls.js"></script>
     <script src="~/js/appDiaryInit.js"></script>
     <script src="~/js/diaryTrackerService.js"></script>
     <script src="~/js/searchController.js"></script>
@@ -19,7 +20,10 @@
             <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..."/>
             <span id="searchbar" class="fa fa-search"></span>
             <table class="table table-responsive table-striped">
-                <tr ng-repeat="food in details">
+                <tr>
+                    <wait-cursor ng-show="isBusy"></wait-cursor>
+                </tr>
+                <tr ng-repeat="food in searchResults">
                     <td class="hideId">{{ food.id }}</td>
                     <td>{{ food.description }}</td>
                     <td>
@@ -40,11 +44,23 @@
                         </button>
                     </td>
                 </tr>
+                <tr ng-show="noResultFound">
+                    <td>
+                        <h3>
+                            No foods found. Create a new food?
+                        </h3>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-lg">
+                            Add
+                        </button>
+                    </td>
+                </tr>
             </table>
-        </div>
 
-        <div id="diaryMain">
-            <h2>Food Diary</h2>
+            <div id="diaryMain">
+                <h2>Food Diary - {{ today }}</h2>
+            </div>
         </div>
 
     </div>

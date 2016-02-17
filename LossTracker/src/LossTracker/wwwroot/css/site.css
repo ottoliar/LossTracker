@@ -24,6 +24,10 @@ thead tr td {
     color: coral;
 }
 
+#diaryMain {
+    position: fixed;
+}
+
 #searchbar {
     float: right;
     margin-right: 6px;

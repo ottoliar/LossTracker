@@ -4,38 +4,56 @@
     'use strict';
 
     angular.module('appDiary')
-        .controller('InstantSearchCtrl', function ($scope, $http, diaryTracker) {
+        .controller('InstantSearchCtrl', function ($scope, $http, $filter, diaryTracker) {
 
             var url = '/api/foods/';
 
-            $scope.$watch('search', function () {
+            $scope.today = $filter('date')(new Date(), 'MM/dd/yyyy');
+
+            // Used when user searches the DB for food that is not there
+            $scope.noResultFound = false;
+
+            $scope.$watch('search', function (newValue, oldValue) {
+                if (newValue == oldValue) return;
                 fetchFoods();
             });
 
+            // Use diary tracker service to add a new entry on current date
             $scope.addDiaryEntry = function (FoodId, numServings, _callback) {
-               diaryTracker.addDiaryEntry(FoodId, numServings, getAllEntries);
+                diaryTracker.addDiaryEntry(FoodId, numServings, getAllEntries);
             };
 
             // Live feed results of database objects matching user query in search bar
-            function fetchFoods () {
-                if ($scope.details === undefined || $scope.search.length !== 0) {
+            function fetchFoods() {
+
+                if ($scope.searchResults === undefined || $scope.search.length !== 0) {
+                    $scope.isBusy = true;
                     var queryUrl = url + $scope.search;
-                    $http.get(queryUrl).then(function (response) {
-                        $scope.details = response.data;
-                    });
+                    $http.get(queryUrl)
+                        .then(function (response) {
+                            if (response.data.length == 0) {
+                                $scope.noResultFound = true;
+                            }
+                            $scope.searchResults = response.data;
+                        }).finally(function () {
+                            $scope.isBusy = false;
+                        });
                 } else {
-                    $scope.details = undefined;
+                    $scope.noResultFound = false;
+                    $scope.searchResults = undefined;
                 }
+
             }
 
             // Gets the latest entries for today's date from the DB
             function getAllEntries() {
-                diaryTracker.getEntriesForToday().then(onComplete, onError);
+                diaryTracker.getEntriesForToday()
+                            .then(onComplete, onError);
             }
 
             // Callbacks once getting latest diary entries has completed
             var onComplete = function (data) {
-                console.log(data);
+                //console.log(data);
             };
 
             var onError = function (response) {

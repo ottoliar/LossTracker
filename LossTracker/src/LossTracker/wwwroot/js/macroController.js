@@ -20,6 +20,10 @@
                     $scope.consumed = diaryTracker.getLatestDiaryMacros();
                 }
 
+                $scope.labels = ["Carbohydrates", "Protein", "Fats"];
+                $scope.data = [50, 80, 75];
+                $scope.colours = ["#FF851B", "#001f3f", "#FF4136"]
+
                 fetchProfile();
             });
 

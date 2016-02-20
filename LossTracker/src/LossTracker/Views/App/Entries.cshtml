@@ -3,25 +3,24 @@
 }
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>
-    <script src="~/lib/angular-animate/angular-animate.js"></script>
-    <script src="~/lib/angular-strap/dist/angular-strap.min.js"></script>
-    <script src="~/lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <script src="~/js/simpleControls.js"></script>
     <script src="~/js/appDiaryInit.js"></script>
     <script src="~/js/diaryTrackerService.js"></script>
     <script src="~/js/searchController.js"></script>
     <script src="~/js/macroController.js"></script>
+    <script src="~/lib/Chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.min.js"></script>
 }
 
 <div class="row" ng-app="appDiary">
     <div class="col-md-6">
         <h2>Food Search</h2>
-        <div ng-controller="InstantSearchCtrl">
+        <div ng-controller="FoodSearchCtrl">
             <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..."/>
             <span id="searchbar" class="fa fa-search"></span>
             <table class="table table-responsive table-striped">
                 <tr>
-                    <wait-cursor ng-show="isBusy"></wait-cursor>
+                    <wait-cursor ng-show="searchIsBusy"></wait-cursor>
                 </tr>
                 <tr ng-repeat="food in searchResults">
                     <td class="hideId">{{ food.id }}</td>
@@ -52,15 +51,50 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary btn-lg">
-                            Add
+                            Create
                         </button>
                     </td>
                 </tr>
             </table>
 
-            <div id="diaryMain">
-                <h2>Food Diary - {{ today }}</h2>
-            </div>
+            <h2>{{ today }}</h2>       
+
+            <h4>Breakfast</h4>
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th ng-click="alert()">
+                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
+                    </th>
+                </tr>
+            </table>
+
+            <h4>Lunch</h4>
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th ng-click="alert()">
+                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
+                    </th>
+                </tr>
+            </table>
+
+            <h4>Dinner</h4>
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th ng-click="alert()">
+                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
+                    </th>
+                </tr>
+            </table>
+
+            <h4>Snacks</h4>
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th ng-click="alert()">
+                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
+                    </th>
+                </tr>
+            </table>
+
         </div>
 
     </div>
@@ -70,7 +104,8 @@
 
             <h2>Calories & Macronutrients</h2>
 
-            <div id="piechart"></div>
+            <canvas id="doughnut" class="chart chart-pie"
+                    chart-data="data" chart-labels="labels" chart-colours="colours"></canvas> 
 
             <div id="macroTable">
                 <table class="table table-striped">

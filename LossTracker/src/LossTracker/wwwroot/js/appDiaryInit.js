@@ -3,6 +3,6 @@
 
     'use strict';
 
-    angular.module('appDiary', ['simpleControls']);
+    angular.module('appDiary', ['simpleControls', 'chart.js']);
 
 })();

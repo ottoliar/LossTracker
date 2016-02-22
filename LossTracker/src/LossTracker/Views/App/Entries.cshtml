@@ -38,7 +38,7 @@
                         <i>Fat: </i> {{ food.fatGrams }}g
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-xs" ng-click="addFood(food.id)">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="addDiaryEntry(food.id)">
                             Add
                         </button>
                     </td>
@@ -58,38 +58,42 @@
             </table>
 
             <h2>{{ today }}</h2>       
-
+            <h3>{{ error }}</h3>
             <h4>Breakfast</h4>
+            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-striped">
                 <tr>
-                    <th ng-click="alert()">
+                    <th ng-click="setMeal(1)">
                         <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
                     </th>
                 </tr>
             </table>
 
             <h4>Lunch</h4>
+            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-striped">
                 <tr>
-                    <th ng-click="alert()">
+                    <th ng-click="setMeal(2)">
                         <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
                     </th>
                 </tr>
             </table>
 
             <h4>Dinner</h4>
+            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-striped">
                 <tr>
-                    <th ng-click="alert()">
+                    <th ng-click="setMeal(3)">
                         <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
                     </th>
                 </tr>
             </table>
 
             <h4>Snacks</h4>
+            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-striped">
                 <tr>
-                    <th ng-click="alert()">
+                    <th ng-click="setMeal(4)">
                         <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
                     </th>
                 </tr>

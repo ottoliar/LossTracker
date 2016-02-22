@@ -57,11 +57,12 @@
         };
 
         // Will update the above object using methods below
-        var addDiaryEntry = function (id, numServings, _callback) {
+        var addDiaryEntry = function (id, numServings, mealId, _callback) {
             // Create new entry using user's data
             var entryToAdd = {
                 FoodId: id,
-                NumberOfServings: numServings
+                NumberOfServings: numServings,
+                MealId: mealId
             };
 
             $http.post(todayEntriesUrl, JSON.stringify(entryToAdd))

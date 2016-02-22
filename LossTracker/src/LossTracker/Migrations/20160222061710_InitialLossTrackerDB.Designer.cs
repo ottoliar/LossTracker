@@ -8,8 +8,8 @@ using LossTracker.Models;
 namespace LossTracker.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20160118173838_IdentityEntities")]
-    partial class IdentityEntities
+    [Migration("20160222061710_InitialLossTrackerDB")]
+    partial class InitialLossTrackerDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,6 +25,8 @@ namespace LossTracker.Migrations
                     b.Property<DateTime>("Day");
 
                     b.Property<int>("FoodId");
+
+                    b.Property<int>("MealId");
 
                     b.Property<int>("NumberOfServings");
 

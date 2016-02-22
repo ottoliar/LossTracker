@@ -22,8 +22,16 @@
             });
 
             // Use diary tracker service to add a new entry on current date
-            $scope.addDiaryEntry = function (FoodId, numServings, _callback) {
-                diaryTracker.addDiaryEntry(FoodId, numServings, getAllEntries);
+            $scope.addDiaryEntry = function (FoodId, numServings, mealId, _callback) {
+                diaryTracker.addDiaryEntry(FoodId, numServings, mealId, getAllEntries);
+
+                // Clear the meal after adding entry
+                $scope.mealId = undefined;
+            };
+
+            // Sets which meal the next added food will be added to (Breakfast, Lunch, Dinner, Snacks)
+            $scope.setMeal = function (num) {
+                $scope.mealId = num;
             };
 
             $scope.alert = function () {
@@ -54,8 +62,15 @@
 
             // Gets the latest entries for today's date from the DB
             function _getAllEntries() {
+
+                $scope.loadIsBusy = true;
+
                 diaryTracker.getEntriesForToday()
-                            .then(onComplete, onError);
+                            .then(onComplete, onError)
+                            .finally(function () {
+                                $scope.loadIsBusy = false;
+                            });
+
             }
 
             // Callbacks once getting latest diary entries has completed

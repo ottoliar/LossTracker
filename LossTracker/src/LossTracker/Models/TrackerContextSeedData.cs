@@ -69,6 +69,7 @@ namespace LossTracker.Models
                     Day = DateTime.Today.Date,
                     NumberOfServings = 2,
                     FoodId = 1,
+                    MealId = 1,
                     Food = _context.Foods.Where(f => f.Id == 1).FirstOrDefault()
                 };
 

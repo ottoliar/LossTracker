@@ -5,11 +5,27 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace LossTracker.Migrations
 {
-    public partial class IdentityEntities : Migration
+    public partial class InitialLossTrackerDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_DiaryEntry_Food_FoodId", table: "DiaryEntry");
+            migrationBuilder.CreateTable(
+                name: "Food",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Calories = table.Column<int>(nullable: false),
+                    CarbGrams = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    FatGrams = table.Column<int>(nullable: false),
+                    ProteinGrams = table.Column<int>(nullable: false),
+                    ServingSizeInGrams = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Food", x => x.Id);
+                });
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
@@ -34,6 +50,22 @@ namespace LossTracker.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LossTrackerUser", x => x.Id);
+                });
+            migrationBuilder.CreateTable(
+                name: "Profile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CalorieGoal = table.Column<int>(nullable: false),
+                    CarbGoal = table.Column<int>(nullable: false),
+                    FatGoal = table.Column<int>(nullable: false),
+                    ProteinGoal = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profile", x => x.Id);
                 });
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -88,6 +120,55 @@ namespace LossTracker.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
+                name: "DiaryEntry",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Day = table.Column<DateTime>(nullable: false),
+                    FoodId = table.Column<int>(nullable: false),
+                    MealId = table.Column<int>(nullable: false),
+                    NumberOfServings = table.Column<int>(nullable: false),
+                    ProfileId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiaryEntry", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiaryEntry_Food_FoodId",
+                        column: x => x.FoodId,
+                        principalTable: "Food",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DiaryEntry_Profile_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+            migrationBuilder.CreateTable(
+                name: "Measurement",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<DateTime>(nullable: false),
+                    ProfileId = table.Column<int>(nullable: true),
+                    WaistInches = table.Column<int>(nullable: false),
+                    WeightLbs = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Measurement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Measurement_Profile_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -130,10 +211,6 @@ namespace LossTracker.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            migrationBuilder.AlterColumn<int>(
-                name: "FoodId",
-                table: "DiaryEntry",
-                nullable: false);
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
@@ -146,35 +223,20 @@ namespace LossTracker.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName");
-            migrationBuilder.AddForeignKey(
-                name: "FK_DiaryEntry_Food_FoodId",
-                table: "DiaryEntry",
-                column: "FoodId",
-                principalTable: "Food",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_DiaryEntry_Food_FoodId", table: "DiaryEntry");
+            migrationBuilder.DropTable("DiaryEntry");
+            migrationBuilder.DropTable("Measurement");
             migrationBuilder.DropTable("AspNetRoleClaims");
             migrationBuilder.DropTable("AspNetUserClaims");
             migrationBuilder.DropTable("AspNetUserLogins");
             migrationBuilder.DropTable("AspNetUserRoles");
+            migrationBuilder.DropTable("Food");
+            migrationBuilder.DropTable("Profile");
             migrationBuilder.DropTable("AspNetRoles");
             migrationBuilder.DropTable("AspNetUsers");
-            migrationBuilder.AlterColumn<int>(
-                name: "FoodId",
-                table: "DiaryEntry",
-                nullable: true);
-            migrationBuilder.AddForeignKey(
-                name: "FK_DiaryEntry_Food_FoodId",
-                table: "DiaryEntry",
-                column: "FoodId",
-                principalTable: "Food",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
     }
 }

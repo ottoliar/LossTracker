@@ -25,6 +25,8 @@ namespace LossTracker.Migrations
 
                     b.Property<int>("FoodId");
 
+                    b.Property<int>("MealId");
+
                     b.Property<int>("NumberOfServings");
 
                     b.Property<int?>("ProfileId");

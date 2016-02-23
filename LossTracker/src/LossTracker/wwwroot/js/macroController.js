@@ -18,11 +18,11 @@
 
                 function updateToLatestDiary() {
                     $scope.consumed = diaryTracker.getLatestDiaryMacros();
-                }
 
-                $scope.labels = ["Carbohydrates", "Protein", "Fats"];
-                $scope.data = [50, 80, 75];
-                $scope.colours = ["#FF851B", "#001f3f", "#FF4136"]
+                    $scope.labels = ["Carbohydrates", "Protein", "Fats"];
+                    $scope.data = [$scope.consumed.carbGrams, $scope.consumed.proteinGrams, $scope.consumed.fatGrams];
+                    $scope.colours = ["#FF851B", "#001f3f", "#FF4136"]
+                }
 
                 fetchProfile();
             });

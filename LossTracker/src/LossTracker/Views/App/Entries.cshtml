@@ -38,7 +38,7 @@
                         <i>Fat: </i> {{ food.fatGrams }}g
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-xs" ng-click="addDiaryEntry(food.id)">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="addDiaryEntry(food.id, 1, $scope.mealId)">
                             Add
                         </button>
                     </td>
@@ -59,43 +59,128 @@
 
             <h2>{{ today }}</h2>       
             <h3>{{ error }}</h3>
-            <h4>Breakfast</h4>
+       
+            <h4 class="meal">Breakfast</h4>
             <wait-cursor ng-show="loadIsBusy"></wait-cursor>
-            <table class="table table-responsive table-striped">
+            <table class="table table-responsive table-hover">
+                <tr ng-repeat="entry in breakfast">
+                    <td class="hideId">{{ entry.id }}</td>
+                    <td>{{ entry.food.description }}</td>
+                    <td>
+                        <i>Servings: </i> {{ entry.numberOfServings }}
+                    </td>
+                    <td>
+                        <i>Calories: </i> {{ entry.food.calories }}
+                    </td>
+                    <td>
+                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                    </td>
+                    <td>
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                    </td>
+                    <td>
+                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                    </td>
+                </tr>
                 <tr>
-                    <th ng-click="setMeal(1)">
-                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
-                    </th>
+                    <td colspan="6">
+                        <a ng-click="setMeal(1)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                            Add <i class="fa fa-plus"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
 
-            <h4>Lunch</h4>
+            <h4 class="meal">Lunch</h4>
             <wait-cursor ng-show="loadIsBusy"></wait-cursor>
-            <table class="table table-responsive table-striped">
+            <table class="table table-responsive table-hover">
+                <tr ng-repeat="entry in lunch">
+                    <td class="hideId">{{ entry.id }}</td>
+                    <td>{{ entry.food.description }}</td>
+                    <td>
+                        <i>Servings: </i> {{ entry.numberOfServings }}
+                    </td>
+                    <td>
+                        <i>Calories: </i> {{ entry.food.calories }}
+                    </td>
+                    <td>
+                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                    </td>
+                    <td>
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                    </td>
+                    <td>
+                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                    </td>
+                </tr>
                 <tr>
-                    <th ng-click="setMeal(2)">
-                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
-                    </th>
+                    <td colspan="6">
+                        <a ng-click="setMeal(2)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                            Add <i class="fa fa-plus"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
 
-            <h4>Dinner</h4>
+            <h4 class="meal">Dinner</h4>
             <wait-cursor ng-show="loadIsBusy"></wait-cursor>
-            <table class="table table-responsive table-striped">
+            <table class="table table-responsive table-hover">
+                <tr ng-repeat="entry in dinner">
+                    <td class="hideId">{{ entry.id }}</td>
+                    <td>{{ entry.food.description }}</td>
+                    <td>
+                        <i>Servings: </i> {{ entry.numberOfServings }}
+                    </td>
+                    <td>
+                        <i>Calories: </i> {{ entry.food.calories }}
+                    </td>
+                    <td>
+                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                    </td>
+                    <td>
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                    </td>
+                    <td>
+                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                    </td>
+                </tr>
                 <tr>
-                    <th ng-click="setMeal(3)">
-                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
-                    </th>
+                    <td colspan="6">
+                        <a ng-click="setMeal(3)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                            Add <i class="fa fa-plus"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
 
-            <h4>Snacks</h4>
+            <h4 class="meal">Snacks</h4>
             <wait-cursor ng-show="loadIsBusy"></wait-cursor>
-            <table class="table table-responsive table-striped">
+            <table class="table table-responsive table-hover">
+                <tr ng-repeat="entry in snacks">
+                    <td class="hideId">{{ entry.id }}</td>
+                    <td>{{ entry.food.description }}</td>
+                    <td>
+                        <i>Servings: </i> {{ entry.numberOfServings }}
+                    </td>
+                    <td>
+                        <i>Calories: </i> {{ entry.food.calories }}
+                    </td>
+                    <td>
+                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                    </td>
+                    <td>
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                    </td>
+                    <td>
+                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                    </td>
+                </tr>
                 <tr>
-                    <th ng-click="setMeal(4)">
-                        <a href="#" style="text-decoration:none;">Add <i class="fa fa-plus"></i></a>
-                    </th>
+                    <td colspan="6">
+                        <a ng-click="setMeal(4)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                            Add <i class="fa fa-plus"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
 

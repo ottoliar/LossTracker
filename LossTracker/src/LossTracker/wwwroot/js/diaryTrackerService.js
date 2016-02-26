@@ -20,7 +20,7 @@
 
         // Updates totals in consumedThusFar 
         // by adding the specific values of food passed in 
-        function updateTotals(food, numServings) {
+        function _updateTotals(food, numServings) {
             for (var key in consumedThusFar) {
                 consumedThusFar[key] += (food[key]*numServings);
             }
@@ -49,7 +49,7 @@
                          // containing diary entries. Get the food details to update diary.
                          var food = dbEntry['food'];
                          var numServings = dbEntry['numberOfServings'];
-                         updateTotals(food, numServings);
+                         _updateTotals(food, numServings);
                      });
 
                      _callback();
@@ -67,14 +67,15 @@
 
             $http.post(todayEntriesUrl, JSON.stringify(entryToAdd))
                         .then(function (response) {
+                            var newEntry = response.data;
                             // Add the newly posted entry to our running totals
-                            var food = response.data['food'];
-                            var numServings = response.data['numberOfServings'];
+                            var food = newEntry['food'];
+                            var numServings = newEntry['numberOfServings'];
                             // Update the running total with the newly added food
-                            updateTotals(food, numServings);
+                            _updateTotals(food, numServings);
+                            _callback(newEntry);
                         });
 
-            _callback();
         };
 
         return {

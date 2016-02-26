@@ -4,7 +4,7 @@
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>
     <script src="~/js/simpleControls.js"></script>
-    <script src="~/js/appDiaryInit.js"></script>
+    <script src="~/js/appDiary.js"></script>
     <script src="~/js/diaryTrackerService.js"></script>
     <script src="~/js/searchController.js"></script>
     <script src="~/js/macroController.js"></script>
@@ -15,35 +15,35 @@
 <div class="row" ng-app="appDiary">
     <div class="col-md-6">
         <h2>Food Search</h2>
-        <div ng-controller="FoodSearchCtrl">
+        <div ng-controller="searchController as vm">
             <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..."/>
             <span id="searchbar" class="fa fa-search"></span>
             <table class="table table-responsive table-striped">
                 <tr>
-                    <wait-cursor ng-show="searchIsBusy"></wait-cursor>
+                    <wait-cursor ng-show="vm.searchIsBusy"></wait-cursor>
                 </tr>
-                <tr ng-repeat="food in searchResults">
+                <tr ng-repeat="food in vm.searchResults">
                     <td class="hideId">{{ food.id }}</td>
                     <td>{{ food.description }}</td>
                     <td>
-                        <i>Calories: </i> {{ food.calories }}
+                        <i>Calories: </i> {{ food.calories | number}}
                     </td>
                     <td>
-                        <i>Protein: </i> {{ food.proteinGrams }}g
+                        <i>Protein: </i> {{ food.proteinGrams | number}}g
                     </td>
                     <td>
-                        <i>Carbohydrates: </i> {{ food.carbGrams }}g
+                        <i>Carbohydrates: </i> {{ food.carbGrams | number}}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{ food.fatGrams }}g
+                        <i>Fat: </i> {{ food.fatGrams | number}}g
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-xs" ng-click="addDiaryEntry(food.id, 1, $scope.mealId)">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="vm.addDiaryEntry(food.id, 1)">
                             Add
                         </button>
                     </td>
                 </tr>
-                <tr ng-show="noResultFound">
+                <tr ng-show="vm.noResultFound">
                     <td>
                         <h3>
                             No foods found. Create a new food?
@@ -57,34 +57,34 @@
                 </tr>
             </table>
 
-            <h2>{{ today }}</h2>       
-            <h3>{{ error }}</h3>
+            <h2>{{ vm.today }}</h2>       
+            <h3>{{ vm.error }}</h3>
        
             <h4 class="meal">Breakfast</h4>
-            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
+            <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-hover">
-                <tr ng-repeat="entry in breakfast">
+                <tr ng-repeat="entry in vm.breakfast">
                     <td class="hideId">{{ entry.id }}</td>
                     <td>{{ entry.food.description }}</td>
                     <td>
-                        <i>Servings: </i> {{ entry.numberOfServings }}
+                        <i>Servings: </i> {{ entry.numberOfServings | number }}
                     </td>
                     <td>
-                        <i>Calories: </i> {{ entry.food.calories }}
+                        <i>Calories: </i> {{ entry.food.calories | number }}
                     </td>
                     <td>
-                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                        <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
                     </td>
                     <td>
-                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <a ng-click="setMeal(1)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                        <a ng-click="vm.setMeal(1)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
                     </td>
@@ -92,30 +92,30 @@
             </table>
 
             <h4 class="meal">Lunch</h4>
-            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
+            <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-hover">
-                <tr ng-repeat="entry in lunch">
+                <tr ng-repeat="entry in vm.lunch">
                     <td class="hideId">{{ entry.id }}</td>
                     <td>{{ entry.food.description }}</td>
                     <td>
-                        <i>Servings: </i> {{ entry.numberOfServings }}
+                        <i>Servings: </i> {{ entry.numberOfServings | number }}
                     </td>
                     <td>
-                        <i>Calories: </i> {{ entry.food.calories }}
+                        <i>Calories: </i> {{ entry.food.calories | number }}
                     </td>
                     <td>
-                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                        <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
                     </td>
                     <td>
-                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <a ng-click="setMeal(2)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                        <a ng-click="vm.setMeal(2)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
                     </td>
@@ -123,30 +123,30 @@
             </table>
 
             <h4 class="meal">Dinner</h4>
-            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
+            <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-hover">
-                <tr ng-repeat="entry in dinner">
+                <tr ng-repeat="entry in vm.dinner">
                     <td class="hideId">{{ entry.id }}</td>
                     <td>{{ entry.food.description }}</td>
                     <td>
-                        <i>Servings: </i> {{ entry.numberOfServings }}
+                        <i>Servings: </i> {{ entry.numberOfServings | number }}
                     </td>
                     <td>
-                        <i>Calories: </i> {{ entry.food.calories }}
+                        <i>Calories: </i> {{ entry.food.calories | number }}
                     </td>
                     <td>
-                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                        <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
                     </td>
                     <td>
-                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <a ng-click="setMeal(3)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                        <a ng-click="vm.setMeal(3)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
                     </td>
@@ -154,30 +154,30 @@
             </table>
 
             <h4 class="meal">Snacks</h4>
-            <wait-cursor ng-show="loadIsBusy"></wait-cursor>
+            <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
             <table class="table table-responsive table-hover">
-                <tr ng-repeat="entry in snacks">
+                <tr ng-repeat="entry in vm.snacks">
                     <td class="hideId">{{ entry.id }}</td>
                     <td>{{ entry.food.description }}</td>
                     <td>
-                        <i>Servings: </i> {{ entry.numberOfServings }}
+                        <i>Servings: </i> {{ entry.numberOfServings | number}}
                     </td>
                     <td>
-                        <i>Calories: </i> {{ entry.food.calories }}
+                        <i>Calories: </i> {{ entry.food.calories | number }}
                     </td>
                     <td>
-                        <i>Protein: </i> {{ entry.food.proteinGrams }}g
+                        <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
                     </td>
                     <td>
-                        <i>Carbohydrates: </i> {{ entry.food.carbGrams }}g
+                        <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams }}g
+                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <a ng-click="setMeal(4)" href="#" style="color: mediumseagreen; text-decoration:none;">
+                        <a ng-click="vm.setMeal(4)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
                     </td>
@@ -189,7 +189,7 @@
     </div>
 
     <div class="col-md-5">
-        <div id="macro" ng-controller="MacroController">
+        <div id="macro" ng-controller="macroController as vm">
 
             <h2>Calories & Macronutrients</h2>
 
@@ -206,8 +206,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ profileMacros.calorieGoal }}</td>
-                            <td>{{ consumed.calories }}</td>
+                            <td>{{ vm.profileMacros.calorieGoal }}</td>
+                            <td>{{ vm.consumed.calories }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -222,18 +222,18 @@
                     <tbody>
                         <tr>
                             <td>Carbohydrates</td>
-                            <td>{{ profileMacros.carbGoal }}g</td>
-                            <td>{{ consumed.carbGrams }}g</td>
+                            <td>{{ vm.profileMacros.carbGoal }}g</td>
+                            <td>{{ vm.consumed.carbGrams }}g</td>
                         </tr>
                         <tr>
                             <td>Protein</td>
-                            <td>{{ profileMacros.proteinGoal }}g</td>
-                            <td>{{ consumed.proteinGrams }}g</td>
+                            <td>{{ vm.profileMacros.proteinGoal }}g</td>
+                            <td>{{ vm.consumed.proteinGrams }}g</td>
                         </tr>
                         <tr>
                             <td>Fat</td>
-                            <td>{{ profileMacros.fatGoal }}g</td>
-                            <td>{{ consumed.fatGrams }}g</td>
+                            <td>{{ vm.profileMacros.fatGoal }}g</td>
+                            <td>{{ vm.consumed.fatGrams }}g</td>
                         </tr>
                     </tbody>
                 </table>

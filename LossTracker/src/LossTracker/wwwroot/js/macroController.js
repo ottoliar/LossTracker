@@ -1,30 +1,35 @@
 // macroController.js -- Get/Update user macros
 (function () {
 
-    'use strict';
+    "use strict";
 
-    angular.module('appDiary')
-            .controller('MacroController', function ($scope, $http, diaryTracker) {
+    angular.module("appDiary")
+        .controller("macroController", macroController);
 
-                // Get latest totals from the database
-                diaryTracker.syncWithDatabase(updateToLatestDiary);
-                var url = '/api/profile/';
+    function macroController($scope, $http, diaryTracker) {
 
-                function fetchProfile() {
-                    $http.get(url).then(function(response) {
-                        $scope.profileMacros = response.data;
-                    });
-                }
+        // Get latest calories/macronutrient totals from database
+        diaryTracker.syncWithDatabase(_updateToLatestDiary);
+        var vm = this;
 
-                function updateToLatestDiary() {
-                    $scope.consumed = diaryTracker.getLatestDiaryMacros();
+        var url = "/api/profile";
 
-                    $scope.labels = ["Carbohydrates", "Protein", "Fats"];
-                    $scope.data = [$scope.consumed.carbGrams, $scope.consumed.proteinGrams, $scope.consumed.fatGrams];
-                    $scope.colours = ["#FF851B", "#001f3f", "#FF4136"]
-                }
+        function _updateToLatestDiary() {
+            vm.consumed = diaryTracker.getLatestDiaryMacros();
 
-                fetchProfile();
+            $scope.labels = ["Carbohydrates", "Protein", "Fats"];
+            $scope.data = [vm.consumed.carbGrams, vm.consumed.proteinGrams, vm.consumed.fatGrams];
+            $scope.colours = ["#FF851B", "#001f3f", "#FF4136"]
+        }
+
+        function _fetchProfile() {
+            $http.get(url).then(function (response) {
+                vm.profileMacros = response.data;
             });
+        }
+
+        // Get user's target macros/calories from profile
+        _fetchProfile();
+    }
 
 })();

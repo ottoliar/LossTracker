@@ -1,126 +1,122 @@
-// searchController.js -- Search food database 
+// searchController.js -- Search food database & add foods to diary
 (function () {
 
-    'use strict';
+    "use strict";
 
-    angular.module('appDiary')
-        .controller('FoodSearchCtrl', function ($scope, $http, $filter, diaryTracker) {
+    angular.module("appDiary")
+        .controller("searchController", searchController);
 
-            var url = '/api/foods/';
+    function searchController($scope, $http, $filter, diaryTracker) {
 
-            $scope.mealId = undefined;
+        // Create the ViewModel
+        var vm = this;
 
-            $scope.today = $filter('date')(new Date(), 'EEEE, MM/dd/yyyy');
+        // Used to reach API endpoint
+        var url = "/api/foods/";
 
-            // Will hold entries pulled from the database for today's date
-            $scope.breakfast = [];
-            $scope.lunch = [];
-            $scope.dinner = [];
-            $scope.snacks = [];
+        vm.today = $filter("date")(new Date(), "EEEE, MM/dd/yyyy");
 
-            // Used when user searches the DB for food that is not there
-            $scope.noResultFound = false;
+        // Will hold entries pulled from the database for today's date
+        vm.breakfast = [];
+        vm.lunch = [];
+        vm.dinner = [];
+        vm.snacks = [];
 
-            $scope.$watch('search', function (newValue, oldValue) {
-                if (newValue == oldValue) return;
-                _fetchFoods();
-            });
+        // Used when user searches the DB for food that is not there
+        vm.noResultFound = false;
 
-            // Use diary tracker service to add a new entry on current date
-            $scope.addDiaryEntry = function (foodId, numServings) {
+        $scope.$watch("search", function (newValue, oldValue) {
+            if (newValue == oldValue) return;
+            _fetchFoods();
+        });
 
-                diaryTracker.addDiaryEntry(foodId, numServings, $scope.mealId, _getAllEntries);
+        // Use diary tracker service to add a new entry on current date
+        vm.addDiaryEntry = function (foodId, numServings) {
 
-                // Clear the meal after adding entry
-                $scope.mealId = undefined;
-            };
+            diaryTracker.addDiaryEntry(foodId, numServings, vm.mealId, _sortEntry);
+            // Clear the meal after adding entry
+            vm.mealId = undefined;
+        };
 
-            // Sets which meal the next added food will be added to (Breakfast, Lunch, Dinner, Snacks)
-            $scope.setMeal = function (num) {
-                $scope.mealId = num;
-            };
+        // Sets which meal the next added food will be added to (Breakfast, Lunch, Dinner, Snacks)
+        vm.setMeal = function (num) {
+            vm.mealId = num;
+        };
 
-            // Utility function to select all entered characters in text box
-            $scope.select = function () {
-                this.setSelectionRange(0, this.value.length);
+        // Utility function to select all entered characters in text box
+        vm.select = function () {
+            this.setSelectionRange(0, this.value.length);
+        }
+
+        // Live feed results of database objects matching user query in search bar
+        function _fetchFoods() {
+            if (vm.searchResults === undefined || $scope.search.length !== 0) {
+
+                vm.searchIsBusy = true;
+                var queryUrl = url + $scope.search;
+
+                $http.get(queryUrl)
+                    .then(function (response) {
+                        if (response.data.length == 0)
+                            vm.noResultFound = true;
+                        vm.searchResults = response.data;
+                    }).finally(function () {
+                        vm.searchIsBusy = false;
+                    });
+
+            } else {
+                vm.noResultFound = false;
+                vm.searchResults = undefined;
             }
+        }
 
-            // Live feed results of database objects matching user query in search bar
-            function _fetchFoods() {
+        // Gets the latest entries for today's date from the DB
+        function _getAllEntries() {
+            vm.loadIsBusy = true;
 
-                if ($scope.searchResults === undefined || $scope.search.length !== 0) {
-                    $scope.searchIsBusy = true;
-                    var queryUrl = url + $scope.search;
-                    $http.get(queryUrl)
-                        .then(function (response) {
-                            if (response.data.length == 0) {
-                                $scope.noResultFound = true;
-                            }
-                            $scope.searchResults = response.data;
-                        }).finally(function () {
-                            $scope.searchIsBusy = false;
+            diaryTracker.getEntriesForToday()
+                        .then(_onComplete, _onError)
+                        .finally(function () {
+                            vm.loadIsBusy = false;
                         });
-                } else {
-                    $scope.noResultFound = false;
-                    $scope.searchResults = undefined;
-                }
+        }
 
-            }
 
-            // Gets the latest entries for today's date from the DB
-            function _getAllEntries() {
-
-                $scope.loadIsBusy = true;
-
-                diaryTracker.getEntriesForToday()
-                            .then(_onComplete, _onError)
-                            .finally(function () {
-                                $scope.loadIsBusy = false;
-                            });
-
-            }
-
-            // Checks current meals to ensure only one entry is included
-            function _mealContains(array, entry) {
-                var found = $filter('filter')(array, { id: entry['id'] }, true);
-                return found.length ? true : false;
-            }
-
-            // Callbacks once getting latest diary entries has completed
-            var _onComplete = function (data) {
-                
+        // Callbacks once getting latest diary entries has completed
+        var _onComplete = function (data) {
                 // Update the diary by placing entries in correct meal
                 angular.forEach(data, function (entry) {
-                    switch (entry['mealId']) {
-                        case 1:
-                            if (!_mealContains($scope.breakfast, entry)) 
-                                $scope.breakfast.push(entry);
-                            break;
-                        case 2:
-                            if (!_mealContains($scope.lunch, entry)) 
-                                $scope.lunch.push(entry);
-                            break;
-                        case 3:
-                            if (!_mealContains($scope.dinner, entry))
-                                $scope.dinner.push(entry);
-                            break;
-                        case 4:
-                            if (!_mealContains($scope.snacks, entry))
-                                $scope.snacks.push(entry);
-                            break;
-                        default:
-                            if (!_mealContains($scope.snacks, entry))
-                                $scope.snacks.push(entry);
-                    }
+                    _sortEntry(entry);
                 });
-
             };
 
-            var _onError = function (response) {
-                $scope.error = "Error retrieving current date's entries from DB";
+        // Places entries in their respective meals (breakfast, lunch, dinner, snacks)
+        function _sortEntry(entry) {
+            switch (entry["mealId"]) {
+                case 1:
+                    vm.breakfast.push(entry);
+                    break;
+                case 2:
+                    vm.lunch.push(entry);
+                    break;
+                case 3:
+                    vm.dinner.push(entry);
+                    break;
+                case 4:
+                    vm.snacks.push(entry);
+                    break;
+                default:
+                    vm.snacks.push(entry);
             }
+        };
 
-            _getAllEntries();
-     });
+        var _onError = function (response) {
+            vm.error = "Error retrieving current date's entries from DB";
+        }
+
+        // Get latest diary entries for this particular day on page load
+        _getAllEntries();
+
+    }
 
 })();

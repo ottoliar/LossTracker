@@ -206,8 +206,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ vm.profileMacros.calorieGoal }}</td>
-                            <td>{{ vm.consumed.calories }}</td>
+                            <td>{{ vm.profileMacros.calorieGoal | number}}</td>
+                            <td>{{ vm.consumed.calories | number}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -222,18 +222,18 @@
                     <tbody>
                         <tr>
                             <td>Carbohydrates</td>
-                            <td>{{ vm.profileMacros.carbGoal }}g</td>
-                            <td>{{ vm.consumed.carbGrams }}g</td>
+                            <td>{{ vm.profileMacros.carbGoal | number}}g</td>
+                            <td>{{ vm.consumed.carbGrams | number}}g</td>
                         </tr>
                         <tr>
                             <td>Protein</td>
-                            <td>{{ vm.profileMacros.proteinGoal }}g</td>
-                            <td>{{ vm.consumed.proteinGrams }}g</td>
+                            <td>{{ vm.profileMacros.proteinGoal | number}}g</td>
+                            <td>{{ vm.consumed.proteinGrams | number}}g</td>
                         </tr>
                         <tr>
                             <td>Fat</td>
-                            <td>{{ vm.profileMacros.fatGoal }}g</td>
-                            <td>{{ vm.consumed.fatGrams }}g</td>
+                            <td>{{ vm.profileMacros.fatGoal | number}}g</td>
+                            <td>{{ vm.consumed.fatGrams | number}}g</td>
                         </tr>
                     </tbody>
                 </table>

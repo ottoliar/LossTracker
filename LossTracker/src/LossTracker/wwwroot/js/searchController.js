@@ -27,12 +27,12 @@
 
         $scope.$watch("search", function (newValue, oldValue) {
             if (newValue == oldValue) return;
+            //vm.noResultFound = false;
             _fetchFoods();
         });
 
         // Use diary tracker service to add a new entry on current date
         vm.addDiaryEntry = function (foodId, numServings) {
-
             diaryTracker.addDiaryEntry(foodId, numServings, vm.mealId, _sortEntry);
             // Clear the meal after adding entry
             vm.mealId = undefined;
@@ -51,19 +51,21 @@
         // Live feed results of database objects matching user query in search bar
         function _fetchFoods() {
             if (vm.searchResults === undefined || $scope.search.length !== 0) {
-
                 vm.searchIsBusy = true;
                 var queryUrl = url + $scope.search;
 
                 $http.get(queryUrl)
                     .then(function (response) {
-                        if (response.data.length == 0)
+                        console.log(response.data.length);
+                        if (response.data.length == 0) {
                             vm.noResultFound = true;
+                        } else {
+                            vm.noResultFound = false;
+                        }
                         vm.searchResults = response.data;
                     }).finally(function () {
                         vm.searchIsBusy = false;
                     });
-
             } else {
                 vm.noResultFound = false;
                 vm.searchResults = undefined;

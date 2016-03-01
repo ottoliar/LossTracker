@@ -4,9 +4,9 @@
     "use strict";
 
     angular.module("appDiary")
-        .controller("searchController", searchController);
+        .controller("entryController", entryController);
 
-    function searchController($scope, $http, $filter, diaryTracker) {
+    function entryController($scope, $http, $filter, diaryTracker) {
 
         // Create the ViewModel
         var vm = this;
@@ -38,9 +38,21 @@
             vm.mealId = undefined;
         };
 
+        // Put the passed entry into the editor
+        vm.editEntry = function (entry) {
+            vm.currentEntry = entry;
+        };
+
+        // Post edited entry to the diary tracker service
+        vm.postEdit = function (entryId) {
+            diaryTracker.editEntry(vm.currentEntry, entryId);
+
+            vm.currentEntry = undefined;
+        };
+
         // Sets which meal the next added food will be added to (Breakfast, Lunch, Dinner, Snacks)
-        vm.setMeal = function (num) {
-            vm.mealId = num;
+        vm.setMeal = function (meal) {
+            vm.mealId = meal;
         };
 
         // Utility function to select all entered characters in text box

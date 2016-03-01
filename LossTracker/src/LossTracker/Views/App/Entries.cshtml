@@ -6,7 +6,7 @@
     <script src="~/js/simpleControls.js"></script>
     <script src="~/js/appDiary.js"></script>
     <script src="~/js/diaryTrackerService.js"></script>
-    <script src="~/js/searchController.js"></script>
+    <script src="~/js/entryController.js"></script>
     <script src="~/js/macroController.js"></script>
     <script src="~/lib/Chart.js/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.min.js"></script>
@@ -15,7 +15,7 @@
 <div class="row" ng-app="appDiary">
     <div class="col-md-6">
         <h2>Food Search</h2>
-        <div ng-controller="searchController as vm">
+        <div ng-controller="entryController as vm">
             <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..."/>
             <span id="searchbar" class="fa fa-search"></span>
             <table class="table table-responsive table-striped">
@@ -58,7 +58,7 @@
             </table>
 
             <h2>{{ vm.today }}</h2>       
-            <h3>{{ vm.error }}</h3>
+            <h3 ng-show="vm.error">{{ vm.error }}</h3>
        
             <h4 class="meal">Breakfast</h4>
             <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
@@ -79,14 +79,14 @@
                         <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
+                        <i>Fat: </i> {{ entry.food.fatGrams | number }}g
                     </td>
                     <td>
-                        <button class="btn btn-success btn-xs">Edit</button>
+                        <button class="btn btn-success btn-xs" ng-click="vm.editEntry(entry)">Edit</button>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <a ng-click="vm.setMeal(1)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
@@ -113,14 +113,14 @@
                         <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
+                        <i>Fat: </i> {{ entry.food.fatGrams | number }}g
                     </td>
                     <td>
-                        <button class="btn btn-success btn-xs">Edit</button>
+                        <button class="btn btn-success btn-xs" ng-click="vm.editEntry(entry)">Edit</button>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <a ng-click="vm.setMeal(2)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
@@ -147,14 +147,14 @@
                         <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
+                        <i>Fat: </i> {{ entry.food.fatGrams | number }}g
                     </td>
                     <td>
-                        <button class="btn btn-success btn-xs">Edit</button>
+                        <button class="btn btn-success btn-xs" ng-click="vm.editEntry(entry)">Edit</button>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <a ng-click="vm.setMeal(3)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
@@ -181,14 +181,14 @@
                         <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{entry.food.fatGrams | number }}g
+                        <i>Fat: </i> {{ entry.food.fatGrams | number }}g
                     </td>
                     <td>
-                        <button class="btn btn-success btn-xs">Edit</button>
+                        <button class="btn btn-success btn-xs" ng-click="vm.editEntry(entry)">Edit</button>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <a ng-click="vm.setMeal(4)" href="#" style="color: mediumseagreen; text-decoration:none;">
                             Add <i class="fa fa-plus"></i>
                         </a>
@@ -196,26 +196,41 @@
                 </tr>
             </table>
 
+            <form ng-show="vm.currentEntry" novalidate name="editEntryForm" ng-submit="vm.postEdit(vm.currentEntry.id)">
+                <div>
+                    <h3>Food: {{ vm.currentEntry.food.description }}</h3>
+                </div>
+                <div class="form-group">
+                    <label>Servings</label>
+                    <input class="form-control" id="servings" name="servings" type="number" value="{{ vm.currentEntry.numberOfServings }}"
+                           ng-model="vm.currentEntry.numberOfServings" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required  />
+                    <span class="text-danger" ng-show="editEntryForm.servings.$error.pattern">Must have >0 serving(s).</span>
+                </div>
+                <div>
+                    <h4>Calories: {{ vm.currentEntry.food.calories * vm.currentEntry.numberOfServings | number}}</h4>
+                    <h4>Carbohydrates: {{ vm.currentEntry.food.carbGrams * vm.currentEntry.numberOfServings | number }}g</h4>
+                    <h4>Protein: {{ vm.currentEntry.food.proteinGrams * vm.currentEntry.numberOfServings | number }}g</h4>
+                    <h4>Fat: {{ vm.currentEntry.food.fatGrams * vm.currentEntry.numberOfServings | number }}</h4>
+                </div>
+                <div>
+                    <input type="submit" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid" />
+                </div>
+            </form>
         </div>
-
     </div>
 
     <div class="col-md-5">
         <div id="macro" ng-controller="macroController as vm">
-
             <h2>Calories & Macronutrients</h2>
-
             <div ng-show="vm.noEntries">
                 <center>
                     <div id="circle"></div>
                 </center>
             </div>
-
             <div ng-show="!vm.noEntries">
                 <canvas id="doughnut" class="chart chart-pie"
                     chart-data="data" chart-labels="labels" chart-colours="colours" chart-options="options"></canvas> 
             </div>
-
             <div id="macroTable">
                 <table class="table table-striped">
                     <thead>

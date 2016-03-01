@@ -9,6 +9,7 @@
 
         var foodApiUrl = '/api/foods';
         var todayEntriesUrl = '/api/entries/' + today;
+        var editEntryUrl = '/api/entries/';
 
         // Object representing what user has consumed so far
         var consumedThusFar = {
@@ -56,7 +57,7 @@
                  });
         };
 
-        // Will update the above object using methods below
+        // Post a new entry to the database and update the running totals
         var addDiaryEntry = function (id, numServings, mealId, _callback) {
             // Create new entry using user's data
             var entryToAdd = {
@@ -75,14 +76,19 @@
                             _updateTotals(food, numServings);
                             _callback(newEntry);
                         });
+        };
 
+        var editEntry = function (entry, id) {
+            console.log("entry: " + entry);
+            console.log("id: " + id);
         };
 
         return {
             addDiaryEntry: addDiaryEntry,
             syncWithDatabase: syncWithDatabase,
             getLatestDiaryMacros: getLatestDiaryMacros,
-            getEntriesForToday: getEntriesForToday
+            getEntriesForToday: getEntriesForToday,
+            editEntry: editEntry
         };
     }
 

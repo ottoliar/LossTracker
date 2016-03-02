@@ -8,10 +8,10 @@ namespace LossTracker.ViewModels
         public int Id { get; set; }
 
         [Required]
-        public int WeightLbs { get; set; }
+        public double WeightLbs { get; set; }
 
         [Required]
-        public int WaistInches { get; set; }
+        public double WaistInches { get; set; }
 
         public DateTime Created { get; set; } = DateTime.UtcNow.Date;
     }

@@ -6,7 +6,7 @@ namespace LossTracker.Models
     {
         public int Id { get; set; }
         public DateTime Created { get; set; }
-        public int WeightLbs { get; set; }
-        public int WaistInches { get; set; }
+        public double WeightLbs { get; set; }
+        public double WaistInches { get; set; }
     }
 }

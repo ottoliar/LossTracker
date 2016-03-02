@@ -128,7 +128,7 @@ namespace LossTracker.Migrations
                     Day = table.Column<DateTime>(nullable: false),
                     FoodId = table.Column<int>(nullable: false),
                     MealId = table.Column<int>(nullable: false),
-                    NumberOfServings = table.Column<int>(nullable: false),
+                    NumberOfServings = table.Column<double>(nullable: false),
                     ProfileId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -155,8 +155,8 @@ namespace LossTracker.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(nullable: false),
                     ProfileId = table.Column<int>(nullable: true),
-                    WaistInches = table.Column<int>(nullable: false),
-                    WeightLbs = table.Column<int>(nullable: false)
+                    WaistInches = table.Column<double>(nullable: false),
+                    WeightLbs = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -10,7 +10,7 @@ namespace LossTracker.ViewModels
         public int Id { get; set; }
 
         [Required]
-        public int NumberOfServings { get; set; }
+        public double NumberOfServings { get; set; }
 
         [Required]
         public int FoodId { get; set; }

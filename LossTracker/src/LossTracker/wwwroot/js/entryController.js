@@ -45,7 +45,7 @@
 
         // Post edited entry to the diary tracker service
         vm.postEdit = function (entryId) {
-            diaryTracker.editEntry(vm.currentEntry, entryId);
+           diaryTracker.editEntry(vm.currentEntry, entryId);
 
             vm.currentEntry = undefined;
         };
@@ -68,7 +68,6 @@
 
                 $http.get(queryUrl)
                     .then(function (response) {
-                        console.log(response.data.length);
                         if (response.data.length == 0) {
                             vm.noResultFound = true;
                         } else {

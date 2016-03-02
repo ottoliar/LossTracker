@@ -8,7 +8,7 @@ using LossTracker.Models;
 namespace LossTracker.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20160222061710_InitialLossTrackerDB")]
+    [Migration("20160302053317_InitialLossTrackerDB")]
     partial class InitialLossTrackerDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,7 @@ namespace LossTracker.Migrations
 
                     b.Property<int>("MealId");
 
-                    b.Property<int>("NumberOfServings");
+                    b.Property<double>("NumberOfServings");
 
                     b.Property<int?>("ProfileId");
 
@@ -114,9 +114,9 @@ namespace LossTracker.Migrations
 
                     b.Property<int?>("ProfileId");
 
-                    b.Property<int>("WaistInches");
+                    b.Property<double>("WaistInches");
 
-                    b.Property<int>("WeightLbs");
+                    b.Property<double>("WeightLbs");
 
                     b.HasKey("Id");
                 });

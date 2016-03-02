@@ -7,6 +7,7 @@
 
         var today = $filter('date')(new Date(), 'MM-dd-yyyy'); 
 
+        // API endpoints
         var foodApiUrl = '/api/foods';
         var todayEntriesUrl = '/api/entries/' + today;
         var editEntryUrl = '/api/entries/';
@@ -21,9 +22,15 @@
 
         // Updates totals in consumedThusFar 
         // by adding the specific values of food passed in 
-        function _updateTotals(food, numServings) {
-            for (var key in consumedThusFar) {
-                consumedThusFar[key] += (food[key]*numServings);
+        function _updateTotals(food, numServings, add) {
+            if (add === true) {
+                for (var key in consumedThusFar) {
+                    consumedThusFar[key] += (food[key] * numServings);
+                }
+            } else {
+                for (var key in consumedThusFar) {
+                    consumedThusFar[key] -= (food[key] * numServings);
+                }
             }
         }
 
@@ -50,7 +57,7 @@
                          // containing diary entries. Get the food details to update diary.
                          var food = dbEntry['food'];
                          var numServings = dbEntry['numberOfServings'];
-                         _updateTotals(food, numServings);
+                         _updateTotals(food, numServings, true);
                      });
 
                      _callback();
@@ -73,14 +80,29 @@
                             var food = newEntry['food'];
                             var numServings = newEntry['numberOfServings'];
                             // Update the running total with the newly added food
-                            _updateTotals(food, numServings);
+                            _updateTotals(food, numServings, true);
                             _callback(newEntry);
                         });
         };
 
-        var editEntry = function (entry, id) {
-            console.log("entry: " + entry);
-            console.log("id: " + id);
+        // Update entries in the database with modified versions
+        var editEntry = function (modifiedEntry, id) {
+            // Post edited entry to the database, then update totals
+            var completeEditUrl = editEntryUrl + id;
+            $http.post(completeEditUrl, JSON.stringify(modifiedEntry))
+                        .then(function (response) {
+                            var numServings = modifiedEntry['numberOfServings'];
+                            var food = modifiedEntry['food'];
+                            _updateTotals(food, numServings, true);
+                        });
+        };
+
+        // Delete entries from DB and their corresponding macros from our object tracker
+        var deleteEntry = function (entry) {
+            var numServings = entry['numberOfServings'];
+            var food = entry['food'];
+            // Remove the macros from the tracker 
+            _updateTotals(food, numServings, false);
         };
 
         return {
@@ -88,7 +110,8 @@
             syncWithDatabase: syncWithDatabase,
             getLatestDiaryMacros: getLatestDiaryMacros,
             getEntriesForToday: getEntriesForToday,
-            editEntry: editEntry
+            editEntry: editEntry,
+            deleteEntry: deleteEntry
         };
     }
 

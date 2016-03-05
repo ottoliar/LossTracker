@@ -26,16 +26,16 @@
                     <td class="hideId">{{ food.id }}</td>
                     <td>{{ food.description }}</td>
                     <td>
-                        <i>Calories: </i> {{ food.calories | number}}
+                        <i>Calories: </i> {{ food.calories | number }}
                     </td>
                     <td>
-                        <i>Protein: </i> {{ food.proteinGrams | number}}g
+                        <i>Protein: </i> {{ food.proteinGrams | number }}g
                     </td>
                     <td>
-                        <i>Carbohydrates: </i> {{ food.carbGrams | number}}g
+                        <i>Carbohydrates: </i> {{ food.carbGrams | number }}g
                     </td>
                     <td>
-                        <i>Fat: </i> {{ food.fatGrams | number}}g
+                        <i>Fat: </i> {{ food.fatGrams | number }}g
                     </td>
                     <td>
                         <button type="button" class="btn btn-success btn-xs" ng-click="vm.addDiaryEntry(food.id, 1)">
@@ -222,14 +222,13 @@
                 </div>
                 <div>
                     <input type="submit" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid" />
-                    <button class="btn btn-danger">Delete this Entry</button>
+                    <button type="button" class="btn btn-danger" ng-click="vm.deleteEntry(vm.currentEntry.id)">Delete this Entry</button>
                 </div>
                 <div><h2>text</h2></div>
                 <div><h2>text</h2></div>
                 <div><h2>text</h2></div>
                 <div><h2>text</h2></div>
                 <div><h2>text</h2></div>
-
             </form>
         </div>
     </div>

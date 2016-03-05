@@ -8,9 +8,10 @@
         var today = $filter('date')(new Date(), 'MM-dd-yyyy'); 
 
         // API endpoints
-        var foodApiUrl = '/api/foods';
+        var foodApiUrl = '/api/foods/';
         var todayEntriesUrl = '/api/entries/' + today;
         var editEntryUrl = '/api/entries/';
+        var deleteEntryUrl = '/api/delete/entries/';
 
         // Object representing what user has consumed so far
         var consumedThusFar = {
@@ -25,11 +26,11 @@
         function _updateTotals(food, numServings, add) {
             if (add === true) {
                 for (var key in consumedThusFar) {
-                    consumedThusFar[key] += (food[key] * numServings);
+                    consumedThusFar[key] += (food[key]*numServings);
                 }
             } else {
                 for (var key in consumedThusFar) {
-                    consumedThusFar[key] -= (food[key] * numServings);
+                    consumedThusFar[key] -= (food[key]*numServings);
                 }
             }
         }
@@ -81,28 +82,41 @@
                             var numServings = newEntry['numberOfServings'];
                             // Update the running total with the newly added food
                             _updateTotals(food, numServings, true);
-                            _callback(newEntry);
+                            _callback(newEntry, true);
                         });
         };
 
         // Update entries in the database with modified versions
-        var editEntry = function (modifiedEntry, id) {
+        var editEntry = function (entry, oldNumServings, id) {
+            var numServings = entry['numberOfServings'];
+            var food = entry['food'];
+            var foodId = entry['foodId'];
+            var modifiedEntry = {
+                numberOfServings: numServings,
+                FoodId: foodId
+            };
             // Post edited entry to the database, then update totals
             var completeEditUrl = editEntryUrl + id;
             $http.post(completeEditUrl, JSON.stringify(modifiedEntry))
                         .then(function (response) {
-                            var numServings = modifiedEntry['numberOfServings'];
-                            var food = modifiedEntry['food'];
-                            _updateTotals(food, numServings, true);
+                            if (numServings < oldNumServings) {
+                                _updateTotals(food, oldNumServings - numServings, false);
+                            } else if (numServings > oldNumServings) {
+                                _updateTotals(food, numServings - oldNumServings, true);
+                            }
                         });
         };
 
         // Delete entries from DB and their corresponding macros from our object tracker
-        var deleteEntry = function (entry) {
+        var deleteEntry = function (entry, id) {
             var numServings = entry['numberOfServings'];
             var food = entry['food'];
             // Remove the macros from the tracker 
-            _updateTotals(food, numServings, false);
+            var completeDeleteUrl = deleteEntryUrl + id;
+            $http.post(completeDeleteUrl)
+                    .then(function (response) {
+                        _updateTotals(food, numServings, false);
+                    });
         };
 
         return {

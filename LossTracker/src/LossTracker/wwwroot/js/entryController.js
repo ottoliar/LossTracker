@@ -33,7 +33,7 @@
 
         // Use diary tracker service to add a new entry on current date
         vm.addDiaryEntry = function (foodId, numServings) {
-            diaryTracker.addDiaryEntry(foodId, numServings, vm.mealId, _sortEntry);
+            diaryTracker.addDiaryEntry(foodId, numServings, vm.mealId, _manageEntry);
             // Clear the meal after adding entry
             vm.mealId = undefined;
         };
@@ -41,11 +41,21 @@
         // Put the passed entry into the editor
         vm.editEntry = function (entry) {
             vm.currentEntry = entry;
+            vm.oldNumServings = entry['numberOfServings'];
         };
 
         // Post edited entry to the diary tracker service
         vm.postEdit = function (entryId) {
-           diaryTracker.editEntry(vm.currentEntry, entryId);
+            console.log("vm CURRENT ENTRY: " + vm.currentEntry);
+           diaryTracker.editEntry(vm.currentEntry, vm.oldNumServings, entryId);
+           vm.currentEntry = undefined;
+           vm.oldNumServings = undefined;
+        };
+
+        // Delete an entry from the database
+        vm.deleteEntry = function (entryId) {
+            _manageEntry(vm.currentEntry, false);
+            diaryTracker.deleteEntry(vm.currentEntry, entryId);
 
             vm.currentEntry = undefined;
         };
@@ -86,7 +96,6 @@
         // Gets the latest entries for today's date from the DB
         function _getAllEntries() {
             vm.loadIsBusy = true;
-
             diaryTracker.getEntriesForToday()
                         .then(_onComplete, _onError)
                         .finally(function () {
@@ -94,38 +103,59 @@
                         });
         }
 
+        // Remove entries that are successfully deleted from the DB from scope
+        function _removeFromMeal(meal, entryId) {
+            meal = meal.filter(function (entry) {
+                return entry['Id'] !== entryId;
+            });
+        }
 
         // Callbacks once getting latest diary entries has completed
         var _onComplete = function (data) {
                 // Update the diary by placing entries in correct meal
                 angular.forEach(data, function (entry) {
-                    _sortEntry(entry);
+                    _manageEntry(entry, true);
                 });
             };
 
-        // Places entries in their respective meals (breakfast, lunch, dinner, snacks)
-        function _sortEntry(entry) {
+        // Places or deletes entries to/from their respective meals (breakfast, lunch, dinner, snacks)
+        function _manageEntry(entry, add) {
             switch (entry["mealId"]) {
                 case 1:
-                    vm.breakfast.push(entry);
+                    if (add === true) 
+                        vm.breakfast.push(entry);
+                    else 
+                        _removeFromMeal(vm.breakfast, entry['Id']);
                     break;
                 case 2:
-                    vm.lunch.push(entry);
+                    if (add === true)
+                        vm.lunch.push(entry);
+                    else
+                        _removeFromMeal(vm.lunch, entry['Id']);
                     break;
                 case 3:
-                    vm.dinner.push(entry);
+                    if (add === true) 
+                        vm.dinner.push(entry);
+                    else
+                        _removeFromMeal(vm.dinner, entry['Id']);
                     break;
                 case 4:
-                    vm.snacks.push(entry);
+                    if (add === true) 
+                        vm.snacks.push(entry);
+                    else 
+                        _removeFromMeal(vm.snacks, entry['Id']);
                     break;
                 default:
-                    vm.snacks.push(entry);
+                    if (add === true) 
+                        vm.snacks.push(entry);
+                    else 
+                        _removeFromMeal(vm.snacks, entry['Id']);
             }
         };
 
         var _onError = function (response) {
             vm.error = "Error retrieving current date's entries from DB";
-        }
+        };
 
         // Get latest diary entries for this particular day on page load
         _getAllEntries();

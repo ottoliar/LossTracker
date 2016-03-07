@@ -46,7 +46,6 @@
 
         // Post edited entry to the diary tracker service
         vm.postEdit = function (entryId) {
-            console.log("vm CURRENT ENTRY: " + vm.currentEntry);
            diaryTracker.editEntry(vm.currentEntry, vm.oldNumServings, entryId);
            vm.currentEntry = undefined;
            vm.oldNumServings = undefined;
@@ -106,7 +105,7 @@
         // Remove entries that are successfully deleted from the DB from scope
         function _removeFromMeal(meal, entryId) {
             meal = meal.filter(function (entry) {
-                return entry['Id'] !== entryId;
+                return entry['id'] !== entryId;
             });
         }
 
@@ -122,34 +121,34 @@
         function _manageEntry(entry, add) {
             switch (entry["mealId"]) {
                 case 1:
-                    if (add === true) 
+                    if (add === true)
                         vm.breakfast.push(entry);
-                    else 
-                        _removeFromMeal(vm.breakfast, entry['Id']);
+                    else
+                        vm.breakfast = _removeFromMeal(vm.breakfast, entry['id']);
                     break;
                 case 2:
                     if (add === true)
                         vm.lunch.push(entry);
                     else
-                        _removeFromMeal(vm.lunch, entry['Id']);
+                        vm.lunch = _removeFromMeal(vm.lunch, entry['id']);
                     break;
                 case 3:
                     if (add === true) 
                         vm.dinner.push(entry);
                     else
-                        _removeFromMeal(vm.dinner, entry['Id']);
+                        vm.dinner = _removeFromMeal(vm.dinner, entry['id']);
                     break;
                 case 4:
                     if (add === true) 
                         vm.snacks.push(entry);
                     else 
-                        _removeFromMeal(vm.snacks, entry['Id']);
+                        vm.snacks = _removeFromMeal(vm.snacks, entry['id']);
                     break;
                 default:
                     if (add === true) 
                         vm.snacks.push(entry);
                     else 
-                        _removeFromMeal(vm.snacks, entry['Id']);
+                        vm.snacks = _removeFromMeal(vm.snacks, entry['id']);
             }
         };
 

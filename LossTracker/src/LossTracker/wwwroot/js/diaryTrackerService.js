@@ -10,7 +10,7 @@
         // API endpoints
         var foodApiUrl = '/api/foods/';
         var todayEntriesUrl = '/api/entries/' + today;
-        var editEntryUrl = '/api/entries/';
+        var editEntryUrl = '/api/edit/';
         var deleteEntryUrl = '/api/delete/entries/';
 
         // Object representing what user has consumed so far
@@ -91,7 +91,9 @@
             var numServings = entry['numberOfServings'];
             var food = entry['food'];
             var foodId = entry['foodId'];
+            var mealId = entry['mealId'];
             var modifiedEntry = {
+                mealId: mealId,
                 numberOfServings: numServings,
                 FoodId: foodId
             };

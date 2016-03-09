@@ -3,6 +3,16 @@
 
     'use strict';
 
-    angular.module('appDiary', ['simpleControls', 'chart.js']);
+    angular.module('appDiary', ['simpleControls', 'entry', 'macro', 'chart.js', 'ngRoute'])
+            .config(function ($routeProvider) {
+
+                $routeProvider.when("/", {
+                    templateUrl: "/views/diaryIndex.html"
+                });
+
+                $routeProvider.otherwise({ redirectTo: "/" });
+
+            });
+
 
 })();

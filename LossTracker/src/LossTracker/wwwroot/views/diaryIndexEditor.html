@@ -1,0 +1,42 @@
+<div>
+    <div>
+        <a href="#/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i> Cancel</a>
+    </div>
+    <div class="col-md-3">
+        <div class="text-danger" ng-show="vm.error">{{ vm.error }}</div>
+        <form ng-show="vm.currentEntry" novalidate name="editEntryForm" ng-submit="vm.postEdit(vm.currentEntry)">
+            <div>
+                <h3>{{ vm.currentEntry.food.description }}</h3>
+            </div>
+            <div class="form-group">
+                <label>Servings</label>
+                <input class="form-control" id="servings" name="servings" type="number" value="{{ vm.currentEntry.numberOfServings }}"
+                       ng-model="vm.newNumberOfServings" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required />
+                <span class="text-danger" ng-show="editEntryForm.servings.$error.pattern">Must have >0 serving(s) to (2) decimal places.</span>
+            </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid" />
+                <button type="button" class="btn btn-danger" ng-click="vm.deleteEntry(vm.currentEntry)">Delete this Entry</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div>
+            <h3>
+                Macronutrients & Calories
+            </h3>
+            <h4>
+                Calories: {{ vm.currentEntry.food.calories*vm.newNumberOfServings | number}}
+            </h4>
+            <h4>
+                Carbohydrates: {{ vm.currentEntry.food.carbGrams*vm.newNumberOfServings | number }}g
+            </h4>
+            <h4>
+                Protein: {{ vm.currentEntry.food.proteinGrams*vm.newNumberOfServings | number }}g
+            </h4>
+            <h4>
+                Fat: {{ vm.currentEntry.food.fatGrams*vm.newNumberOfServings | number }}g
+            </h4>
+        </div>
+    </div>
+</div>

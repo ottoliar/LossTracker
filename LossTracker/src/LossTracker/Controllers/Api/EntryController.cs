@@ -73,7 +73,7 @@ namespace LossTracker.Controllers.Api
 
         [Authorize]
         [HttpPost]
-        [Route("/api/edit/{id}")]
+        [Route("/api/entries/edit/{id}")]
         public JsonResult EditPost([FromBody]EntryViewModel vm, int id)
         {
             try
@@ -104,8 +104,40 @@ namespace LossTracker.Controllers.Api
         } 
 
         [Authorize]
+        [HttpGet]
+        [Route("/api/entries/getentry/{id}")]
+        public JsonResult GetSingleEntry(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Getting entry from database...");
+
+                var result = Mapper.Map<EntryViewModel>(_repository.GetSingleEntry(id));
+
+                if (result != null)
+                {
+                    return Json(result);
+                }
+                else
+                {
+                    return Json(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to save new entry to the database", ex);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message });
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
+
+        }
+
+        [Authorize]
         [HttpPost]
-        [Route("/api/delete/entries/{id}")]
+        [Route("/api/entries/delete/{id}")]
         public JsonResult DeletePost(int id)
         {
             try

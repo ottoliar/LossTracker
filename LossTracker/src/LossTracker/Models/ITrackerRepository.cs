@@ -14,6 +14,7 @@ namespace LossTracker.Models
         void UpdateProfile(Profile profile, string name);
         Food GetFood(int id);
         Profile GetProfile(string name);
+        DiaryEntry GetSingleEntry(int id);
         IEnumerable<Food> SearchFoods(string query);
         IEnumerable<Measurement> GetMeasurements(string name);
         IEnumerable<DiaryEntry> GetDiaryEntries(DateTime day, string name);

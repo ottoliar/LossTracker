@@ -8,21 +8,23 @@
 
     function macroController($scope, $http, diaryTracker) {
 
-        // Get latest calories/macronutrient totals from database
-        diaryTracker.syncWithDatabase(_updateToLatestDiary);
+        // ViewModel
         var vm = this;
 
         // Get User's profile goals
-        var url = "/api/profile";
+        var url = "/api/profile/";
         vm.noEntries = true;
 
+        // vm.consumed measures the total macros for user's entries
         function _updateToLatestDiary() {
             vm.consumed = diaryTracker.getLatestDiaryMacros();
         }
 
+        // Get user's calorie/macro goals
         function _fetchProfile() {
             $http.get(url).then(function (response) {
                 vm.profileMacros = response.data;
+                _updateToLatestDiary();
             });
         }
 
@@ -31,7 +33,7 @@
         $scope.$watch("vm.consumed", function (newValue, oldValue) {
             if (newValue == oldValue) return;
 
-            // Initialiaze pie chart graph
+            // Initialiaze pie chart graph with new values
             $scope.labels = ["Carbohydrates", "Protein", "Fats"];
             $scope.data = [vm.consumed.carbGrams, vm.consumed.proteinGrams, vm.consumed.fatGrams];
             $scope.colours = ["#FF851B", "#001f3f", "#FF4136"];

@@ -1,0 +1,136 @@
+<div class="col-md-6">
+    <h2>{{ vm.today }}</h2>
+    <div class="text-danger" ng-show="vm.error">{{ vm.error }}</div>
+
+    <h4 class="meal">Breakfast</h4>
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <table class="table table-responsive table-hover">
+        <tr ng-repeat="entry in vm.breakfast">
+            <td>{{ entry.food.description }}</td>
+            <td>
+                <i>Servings: </i> {{ entry.numberOfServings | number }}
+            </td>
+            <td>
+                <i>Calories: </i> {{ entry.food.calories | number }}
+            </td>
+            <td>
+                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+            </td>
+            <td>
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+            </td>
+            <td>
+                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+            </td>
+            <td>
+                <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <a href="#/search/1" style="color: mediumseagreen; text-decoration:none;">
+                    Add <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <h4 class="meal">Lunch</h4>
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <table class="table table-responsive table-hover">
+        <tr ng-repeat="entry in vm.lunch">
+            <td>{{ entry.food.description }}</td>
+            <td>
+                <i>Servings: </i> {{ entry.numberOfServings | number }}
+            </td>
+            <td>
+                <i>Calories: </i> {{ entry.food.calories | number }}
+            </td>
+            <td>
+                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+            </td>
+            <td>
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+            </td>
+            <td>
+                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+            </td>
+            <td>
+                <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <a href="#/search/2" style="color: mediumseagreen; text-decoration:none;">
+                    Add <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <h4 class="meal">Dinner</h4>
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <table class="table table-responsive table-hover">
+        <tr ng-repeat="entry in vm.dinner">
+            <td>{{ entry.food.description }}</td>
+            <td>
+                <i>Servings: </i> {{ entry.numberOfServings | number }}
+            </td>
+            <td>
+                <i>Calories: </i> {{ entry.food.calories | number }}
+            </td>
+            <td>
+                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+            </td>
+            <td>
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+            </td>
+            <td>
+                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+            </td>
+            <td>
+                <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <a href="#/search/3" style="color: mediumseagreen; text-decoration:none;">
+                    Add <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <h4 class="meal">Snacks</h4>
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <table class="table table-responsive table-hover">
+        <tr ng-repeat="entry in vm.snacks">
+            <td>{{ entry.food.description }}</td>
+            <td>
+                <i>Servings: </i> {{ entry.numberOfServings | number}}
+            </td>
+            <td>
+                <i>Calories: </i> {{ entry.food.calories | number }}
+            </td>
+            <td>
+                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+            </td>
+            <td>
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+            </td>
+            <td>
+                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+            </td>
+            <td>
+                <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <a href="#/search/4" style="color: mediumseagreen; text-decoration:none;">
+                    Add <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>

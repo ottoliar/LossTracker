@@ -26,9 +26,7 @@ namespace LossTracker.Controllers
         [Authorize]
         public IActionResult Entries()
         {
-            var entries = _repository.GetDiaryEntries(DateTime.Today.Date, User.Identity.Name);
-
-            return View(Mapper.Map<IEnumerable<EntryViewModel>>(entries));
+            return View();
         }
 
         public IActionResult Progress()

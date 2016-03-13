@@ -1,0 +1,54 @@
+<div class="col-md-5">
+    <h2>Calories & Macronutrients</h2>
+    <div ng-show="vm.noEntries">
+        <center>
+            <div id="circle"></div>
+        </center>
+    </div>
+    <div ng-show="!vm.noEntries">
+        <canvas id="doughnut" class="chart chart-pie"
+                chart-data="data" chart-labels="labels" chart-colours="colours" chart-options="options"></canvas>
+    </div>
+    <div id="macroTable">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Calorie Goal</td>
+                    <td>Consumed</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ vm.profileMacros.calorieGoal | number}}</td>
+                    <td>{{ vm.consumed.calories | number}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Macros</td>
+                    <td>Goal</td>
+                    <td>Consumed</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Carbohydrates</td>
+                    <td>{{ vm.profileMacros.carbGoal | number}}g</td>
+                    <td>{{ vm.consumed.carbGrams | number}}g</td>
+                </tr>
+                <tr>
+                    <td>Protein</td>
+                    <td>{{ vm.profileMacros.proteinGoal | number}}g</td>
+                    <td>{{ vm.consumed.proteinGrams | number}}g</td>
+                </tr>
+                <tr>
+                    <td>Fat</td>
+                    <td>{{ vm.profileMacros.fatGoal | number}}g</td>
+                    <td>{{ vm.consumed.fatGrams | number}}g</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

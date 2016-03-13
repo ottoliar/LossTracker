@@ -144,6 +144,7 @@ namespace LossTracker.Models
         public DiaryEntry GetSingleEntry(int id)
         {
             return _context.DiaryEntries
+                            .Include(f => f.Food)
                             .Where(e => e.Id == id)
                             .SingleOrDefault();
         }

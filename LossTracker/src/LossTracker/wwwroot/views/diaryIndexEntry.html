@@ -8,19 +8,19 @@
         <tr ng-repeat="entry in vm.breakfast">
             <td>{{ entry.food.description }}</td>
             <td>
-                <i>Servings: </i> {{ entry.numberOfServings | number }}
+                <i>Servings: </i> {{ entry.numberOfServings| number }}
             </td>
             <td>
-                <i>Calories: </i> {{ entry.food.calories | number }}
+                <i>Calories: </i> {{ entry.food.calories*entry.numberOfServings | number }}
             </td>
             <td>
-                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+                <i>Protein: </i> {{ entry.food.proteinGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+                <i>Fat: </i> {{ entry.food.fatGrams*entry.numberOfServings | number }}g
             </td>
             <td>
                 <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
@@ -44,16 +44,16 @@
                 <i>Servings: </i> {{ entry.numberOfServings | number }}
             </td>
             <td>
-                <i>Calories: </i> {{ entry.food.calories | number }}
+                <i>Calories: </i> {{ entry.food.calories*entry.numberOfServings | number }}
             </td>
             <td>
-                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+                <i>Protein: </i> {{ entry.food.proteinGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+                <i>Fat: </i> {{ entry.food.fatGrams*entry.numberOfServings | number }}g
             </td>
             <td>
                 <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
@@ -77,16 +77,16 @@
                 <i>Servings: </i> {{ entry.numberOfServings | number }}
             </td>
             <td>
-                <i>Calories: </i> {{ entry.food.calories | number }}
+                <i>Calories: </i> {{ entry.food.calories*entry.numberOfServings | number }}
             </td>
             <td>
-                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+                <i>Protein: </i> {{ entry.food.proteinGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+                <i>Fat: </i> {{ entry.food.fatGrams*entry.numberOfServings | number }}g
             </td>
             <td>
                 <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>
@@ -107,19 +107,19 @@
         <tr ng-repeat="entry in vm.snacks">
             <td>{{ entry.food.description }}</td>
             <td>
-                <i>Servings: </i> {{ entry.numberOfServings | number}}
+                <i>Servings: </i> {{ entry.numberOfServings*entry.numberOfServings | number}}
             </td>
             <td>
-                <i>Calories: </i> {{ entry.food.calories | number }}
+                <i>Calories: </i> {{ entry.food.calories*entry.numberOfServings | number }}
             </td>
             <td>
-                <i>Protein: </i> {{ entry.food.proteinGrams | number }}g
+                <i>Protein: </i> {{ entry.food.proteinGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Carbohydrates: </i> {{ entry.food.carbGrams | number }}g
+                <i>Carbohydrates: </i> {{ entry.food.carbGrams*entry.numberOfServings | number }}g
             </td>
             <td>
-                <i>Fat: </i> {{ entry.food.fatGrams | number }}g
+                <i>Fat: </i> {{ entry.food.fatGrams*entry.numberOfServings | number }}g
             </td>
             <td>
                 <a href="#/editor/{{ entry.id }}" class="btn btn-success btn-xs">Manage</a>

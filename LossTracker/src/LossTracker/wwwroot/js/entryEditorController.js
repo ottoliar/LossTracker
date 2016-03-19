@@ -7,12 +7,26 @@
             .controller("entryEditorController", entryEditorController);
 
     // Entry ID to be edited is passed in as a route parameter
-    function entryEditorController($routeParams, $location, diaryTracker) {
+    function entryEditorController($routeParams, $location, $alert, diaryTracker) {
 
         // Creating the ViewModel for this page
         var vm = this;
 
+        // Get entry parameter for URL (entry to be edited)
         var entryId = $routeParams.entryId;
+
+        // Disable the submit button upon initial click
+        vm.isDisabled = false;
+
+        // Alerts for successful edit/delete
+        vm.alertEditSuccess = $alert({
+            title: "Add Successful!",
+            content: "Entry added to database.",
+            placement: 'top',
+            type: 'success',
+            duration: 3,
+            show: false
+        });
         
         // Get the entry to be edited
         function _getEntry() {
@@ -36,22 +50,23 @@
 
         // Post modified entry to the database
         vm.postEdit = function (entry) {
-            // No change was made
+            vm.isDisabled = true;
+            // No change was made, redirect to index
             if (vm.newNumberOfServings === entry.numberOfServings) {
-                // Redirect to root 
                 $location.path("/");
+            // Post edited entry and then redirect back to main page
             } else {
-                // Post edited entry and then redirect back to main page
                 var oldNumServings = entry.numberOfServings;
                 var newNumServings = vm.newNumberOfServings;
                 diaryTracker.editEntry(entry, oldNumServings, newNumServings)
                             .finally(function () {
+                                vm.alertEditSuccess.show();
                                 $location.path("/");
                             });
             }
         };
 
-        // Delete the entry
+        // Delete entry from the database
         vm.deleteEntry = function (entry) {
             diaryTracker.deleteEntry(entry);
         };

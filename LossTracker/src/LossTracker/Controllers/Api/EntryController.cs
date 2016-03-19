@@ -90,6 +90,7 @@ namespace LossTracker.Controllers.Api
                         Response.StatusCode = (int)HttpStatusCode.Created;
                         return Json(true);
                     }
+
                 }
             }
             catch (Exception ex)

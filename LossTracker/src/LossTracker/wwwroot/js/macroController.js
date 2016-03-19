@@ -34,9 +34,9 @@
             if (newValue == oldValue) return;
 
             // Initialiaze pie chart graph with new values
-            $scope.labels = ["Carbohydrates", "Protein", "Fats"];
+            $scope.labels = ["Carbohydrate", "Protein", "Fat"];
             $scope.data = [vm.consumed.carbGrams, vm.consumed.proteinGrams, vm.consumed.fatGrams];
-            $scope.colours = ["#FF851B", "#001f3f", "#FF4136"];
+            $scope.colours = ["#0074D9", "2ECC40", "#FF4136"];
             $scope.options = { tooltipTemplate: "<%=label%>: <%=value%>g" };
 
             if (vm.consumed.calories !== 0)

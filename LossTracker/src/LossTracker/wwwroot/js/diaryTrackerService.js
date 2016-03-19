@@ -143,7 +143,7 @@
                 NumberOfServings: numServings,
                 MealId: mealId
             };
-            $http.post(todayEntriesUrl, JSON.stringify(entryToAdd))
+            return $http.post(todayEntriesUrl, JSON.stringify(entryToAdd))
                         .then(function (response) {
                             var newEntry = response.data;
                             // Add the newly posted entry to our running totals
@@ -163,7 +163,11 @@
             };
             // Post edited entry to the database, then update totals
             var completeEditUrl = editEntryUrl + entry.id;
-            return $http.post(completeEditUrl, JSON.stringify(modifiedEntry))
+            return $http.post(completeEditUrl, JSON.stringify(modifiedEntry), {
+                             headers: {
+                                    'Content-Type': 'application/json'
+                             }
+                        })
                         .then(function (response) {
                             if (newNumServings < oldNumServings) {
                                 _updateTotals(food, oldNumServings - newNumServings, false);

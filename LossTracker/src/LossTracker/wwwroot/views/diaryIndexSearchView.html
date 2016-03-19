@@ -26,9 +26,9 @@
                     <i>Fat: </i> {{ food.fatGrams | number }}g
                 </td>
                 <td>
-                    <a href="#/" class="btn btn-success btn-xs" ng-click="vm.addDiaryEntry(food.id, 1)">
+                    <button class="btn btn-success btn-xs" ng-click="vm.addDiaryEntry(food.id)">
                         Add
-                    </a>
+                    </button>
                 </td>
             </tr>
             <tr ng-show="vm.noResultFound">

@@ -6,7 +6,7 @@
     angular.module("appDiary")
         .controller("addController", addController);
 
-    function addController($routeParams, $scope, $http, diaryTracker) {
+    function addController($routeParams, $location, $scope, $http, diaryTracker) {
 
         var vm = this;
 
@@ -27,8 +27,12 @@
         });
 
         // Use diary tracker service to add a new entry on current date
-        vm.addDiaryEntry = function (foodId, numServings) {
-            diaryTracker.addDiaryEntry(foodId, numServings, vm.mealId);
+        vm.addDiaryEntry = function (foodId) {
+            // Add only one serving for now
+            diaryTracker.addDiaryEntry(foodId, 1, vm.mealId)
+                        .finally(function () {
+                             $location.path("#/");
+                        });
         };
 
         // Live feed results of database objects matching user query in search bar

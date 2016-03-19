@@ -59,16 +59,12 @@ namespace LossTracker.Models
 
         public void EditEntry(DiaryEntry newEntry, int id)
         {
+            // Find the old entry and update it with the new information
             var oldEntry = GetSingleEntry(id);
 
-            // Update all fields except ID/Date
-            foreach (PropertyInfo propertyInfo in oldEntry.GetType().GetProperties())
-            {
-                if (propertyInfo.Name != "Id" && propertyInfo.Name != "Day")
-                {
-                    propertyInfo.SetValue(oldEntry, propertyInfo.GetValue(newEntry));
-                }
-            }
+            oldEntry.MealId = newEntry.MealId;
+            oldEntry.NumberOfServings = newEntry.NumberOfServings;
+            oldEntry.FoodId = newEntry.FoodId;
         }
 
         public void UpdateProfile(Profile newProfile, string name)
@@ -83,14 +79,14 @@ namespace LossTracker.Models
             }
             else
             {
-                foreach (PropertyInfo propertyInfo in oldProfile.GetType().GetProperties())
-                {
-                    // Update all fields except ID/UserName
-                    if (propertyInfo.Name != "Id" && propertyInfo.Name != "UserName")
-                    {
-                        propertyInfo.SetValue(oldProfile, propertyInfo.GetValue(newProfile));
-                    }
-                }
+                //foreach (PropertyInfo propertyInfo in oldProfile.GetType().GetProperties())
+                //{
+                //    // Update all fields except ID/UserName
+                //    if (propertyInfo.Name != "Id" && propertyInfo.Name != "UserName")
+                //    {
+                //        propertyInfo.SetValue(oldProfile, propertyInfo.GetValue(newProfile));
+                //    }
+                //}
             }
         }
 

@@ -3,7 +3,8 @@
 
     'use strict';
 
-    angular.module('appDiary', ['simpleControls', 'entry', 'macro', 'chart.js', 'ngRoute'])
+    angular.module('appDiary', ['ngAnimate', 'mgcrea.ngStrap', 'simpleControls', 'entry',
+            'macro', 'chart.js', 'ngRoute'])
             .config(function ($routeProvider, $locationProvider) {
 
                 $routeProvider.when("/", {

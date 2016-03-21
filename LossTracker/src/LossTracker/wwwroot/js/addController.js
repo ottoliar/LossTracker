@@ -22,7 +22,6 @@
         // Search database for foods
         $scope.$watch("search", function (newValue, oldValue) {
             if (newValue == oldValue) return;
-            //vm.noResultFound = false;
             _fetchFoods();
         });
 

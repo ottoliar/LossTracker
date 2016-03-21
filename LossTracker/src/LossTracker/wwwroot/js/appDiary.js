@@ -23,6 +23,12 @@
                     templateUrl: "/views/diaryIndexEditor.html"
                 });
 
+                $routeProvider.when("/create", {
+                    controller: "createController",
+                    controllerAs: "vm",
+                    templateUrl: "/views/diaryIndexCreateNewFood.html"
+                });
+
                 $routeProvider.otherwise({ redirectTo: "/" });
 
             });

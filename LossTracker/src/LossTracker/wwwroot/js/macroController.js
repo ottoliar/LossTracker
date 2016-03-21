@@ -1,7 +1,7 @@
 // macroController.js -- Get/Update user macros
 (function () {
 
-    "use strict";
+    'use strict';
 
     angular.module("appDiary")
         .controller("macroController", macroController);
@@ -36,8 +36,8 @@
             // Initialiaze pie chart graph with new values
             $scope.labels = ["Carbohydrate", "Protein", "Fat"];
             $scope.data = [vm.consumed.carbGrams, vm.consumed.proteinGrams, vm.consumed.fatGrams];
-            $scope.colours = ["#0074D9", "2ECC40", "#FF4136"];
-            $scope.options = { tooltipTemplate: "<%=label%>: <%=value%>g" };
+            $scope.colours = ["#FF851B", "#001f3f", "#FF4136"];
+            $scope.options = { tooltipTemplate: "<%=label%>: <%=value%>g", animation: false };
 
             if (vm.consumed.calories !== 0)
                 vm.noEntries = false;

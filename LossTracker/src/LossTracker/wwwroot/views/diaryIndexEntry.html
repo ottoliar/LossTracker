@@ -2,6 +2,7 @@
     <h2>{{ vm.today }}</h2>
     <div class="text-danger" ng-show="vm.error">{{ vm.error }}</div>
 
+    <a href="#/create" class="btn btn-success">Create a new food to contribute to the database!</a>
     <h4 class="meal">Breakfast</h4>
     <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
     <table class="table table-responsive table-hover">

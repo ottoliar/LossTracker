@@ -4,6 +4,10 @@
     padding: 3px;
 }
 
+.alert {
+    color: slategray;
+}
+
 .hideId {
     display: none;
 }

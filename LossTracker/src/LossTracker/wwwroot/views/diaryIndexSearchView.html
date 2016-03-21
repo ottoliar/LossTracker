@@ -2,7 +2,7 @@
     <div>
         <a href="#/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i> Cancel</a>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-12">
         <h2>Food Search</h2>
         <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..." />
         <span id="searchbar" class="fa fa-search"></span>
@@ -38,9 +38,9 @@
                     </h3>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary btn-lg">
+                    <a href="#/create" class="btn btn-primary btn-lg">
                         Create
-                    </button>
+                    </a>
                 </td>
             </tr>
         </table>

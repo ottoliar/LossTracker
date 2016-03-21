@@ -1,4 +1,4 @@
-// diaryTracker.js -- Provide a single object representing state of food diary
+// diaryTracker.js -- Provide a single object API maintaining current state of diary
 (function () {
 
     'use strict';
@@ -48,11 +48,11 @@
                 var currentEntry = array[i];
                 // Option to remove entry from the array, or simply check if it exists
                 if (currentEntry.id === entry.id) {
+                    // Remove object if option set to true
                     if (toDelete) {
                         array.splice(i, 1);
-                    } else {
-                        return true;
                     }
+                    return true;
                 }
             }
             return false;
@@ -117,23 +117,6 @@
                     return response.data;
                 });
         }
-
-        // Pulls entries from the given date from the database
-        // Updates the consumedThusFar with totals
-        /*var syncWithDatabase = function (_callback) {
-            $http.get(todayEntriesUrl)
-                 .then(function (response) {
-                     angular.forEach(response.data, function (dbEntry) {
-                         // response.data is an array of objects 
-                         // containing diary entries. Get the food details to update diary.
-                         var food = dbEntry.food;
-                         var numServings = dbEntry.numberOfServings;
-                         _updateTotals(food, numServings, true);
-                     });
-
-                     _callback();
-                 });
-        };*/
 
         // Post a new entry to the database and update the running totals
         var addDiaryEntry = function (id, numServings, mealId) {
@@ -209,7 +192,7 @@
             var food = entry.food;
             // Remove the macros from the tracker 
             var completeDeleteUrl = deleteEntryUrl + entry.id;
-            $http.post(completeDeleteUrl)
+            return $http.post(completeDeleteUrl)
                     .then(function (response) {
                         // Remove the entry from the array
                         _sortEntry(entry, true, false);
@@ -246,7 +229,6 @@
             getDinnerEntries: getDinnerEntries,
             getSnackEntries: getSnackEntries,
             addDiaryEntry: addDiaryEntry,
-            //syncWithDatabase: syncWithDatabase,
             getSingleEntry: getSingleEntry,
             getLatestDiaryMacros: getLatestDiaryMacros,
             getEntriesForToday: getEntriesForToday,

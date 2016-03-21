@@ -4,9 +4,9 @@
     </div>
     <div class="col-md-3">
         <div class="text-danger" ng-show="vm.error">{{ vm.error }}</div>
+        <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
         <form ng-show="vm.currentEntry" novalidate name="editEntryForm" ng-submit="vm.postEdit(vm.currentEntry)">
             <div>
-                <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
                 <h3>{{ vm.currentEntry.food.description }}</h3>
             </div>
             <div class="form-group">
@@ -16,8 +16,8 @@
                 <span class="text-danger" ng-show="editEntryForm.servings.$error.pattern">Must have >0 serving(s)</span>
             </div>
             <div>
-                <input type="submit" ng-disabled="isDisabled" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid" />
-                <button type="button" ng-disabled="isDisabled" class="btn btn-danger" ng-click="vm.deleteEntry(vm.currentEntry)">Delete this Entry</button>
+                <input type="submit" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid && !vm.isDisabled" />
+                <button type="button" ng-disabled="vm.isDisabled" class="btn btn-danger" ng-click="vm.deleteEntry(vm.currentEntry)">Delete Entry</button>
             </div>
         </form>
     </div>

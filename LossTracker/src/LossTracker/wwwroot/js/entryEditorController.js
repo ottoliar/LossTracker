@@ -21,10 +21,21 @@
         // Alerts for successful edit/delete
         vm.alertEditSuccess = $alert({
             title: "Add Successful!",
-            content: "Entry added to database.",
-            placement: 'top',
-            type: 'success',
+            content: "Entry was successfully edited.",
+            placement: "top-right",
+            type: "success",
             duration: 3,
+            dismissable: true,
+            show: false
+        });
+
+        vm.alertDeleteSuccess = $alert({
+            title: "Delete Successful!",
+            content: "Entry was successfully deleted.",
+            placement: "top-right",
+            type: "success",
+            duration: 3,
+            dismissable: true,
             show: false
         });
         
@@ -68,9 +79,16 @@
 
         // Delete entry from the database
         vm.deleteEntry = function (entry) {
-            diaryTracker.deleteEntry(entry);
+            vm.loadIsBusy = true;
+            diaryTracker.deleteEntry(entry)
+                        .finally(function () {
+                            vm.loadIsBusy = false;
+                            vm.alertDeleteSuccess.show();
+                            $location.path("/");
+                        });
         };
 
+        // Load entry to be edited
         _getEntry();
         
     }

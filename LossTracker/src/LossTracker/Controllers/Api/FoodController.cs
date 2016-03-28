@@ -11,7 +11,7 @@ using System.Net;
 namespace LossTracker.Controllers.Api
 {
     [Authorize]
-    [Route("api/foods")]
+    [Route("api/foods/")]
     public class FoodController : Controller
     {
         private ILogger<FoodController> _logger;
@@ -44,8 +44,9 @@ namespace LossTracker.Controllers.Api
 
                     if (_repository.SaveAll())
                     {
+                        var lastId = newFood.Id;
                         Response.StatusCode = (int)HttpStatusCode.Created;
-                        return Json(true);
+                        return Json(lastId);
                     }
                 }
             }

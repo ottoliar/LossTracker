@@ -6,9 +6,20 @@
     angular.module("appDiary")
         .controller("addController", addController);
 
-    function addController($routeParams, $location, $scope, $http, diaryTracker) {
+    function addController($routeParams, $location, $scope, $http, $alert, diaryTracker) {
 
         var vm = this;
+
+        // Alert for add to today's diary
+        vm.alertAddSuccess = $alert({
+            title: "Add Successful!",
+            content: "One serving was added to your diary",
+            placement: "top-right",
+            type: "success",
+            duration: 3,
+            dismissable: true,
+            show: false
+        });
 
         // Used to reach API endpoint
         var url = "/api/foods/";
@@ -30,7 +41,8 @@
             // Add only one serving for now
             diaryTracker.addDiaryEntry(foodId, 1, vm.mealId)
                         .finally(function () {
-                             $location.path("#/");
+                            vm.alertAddSuccess.show();
+                            $location.path("/");
                         });
         };
 

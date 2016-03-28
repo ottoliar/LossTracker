@@ -20,7 +20,7 @@
 
         // Alerts for successful edit/delete
         vm.alertEditSuccess = $alert({
-            title: "Add Successful!",
+            title: "Edit Successful!",
             content: "Entry was successfully edited.",
             placement: "top-right",
             type: "success",

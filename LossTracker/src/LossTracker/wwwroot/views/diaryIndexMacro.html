@@ -20,7 +20,9 @@
             <tbody>
                 <tr>
                     <td>{{ vm.profileMacros.calorieGoal | number}}</td>
-                    <td>{{ vm.consumed.calories | number}}</td>
+                    <td ng-class="{ green : vm.consumed.calories <= vm.profileMacros.calorieGoal, red : vm.consumed.calories > vm.profileMacros.calorieGoal }">
+                        {{ vm.consumed.calories | number}}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -36,17 +38,23 @@
                 <tr>
                     <td>Carbohydrates</td>
                     <td>{{ vm.profileMacros.carbGoal | number}}g</td>
-                    <td>{{ vm.consumed.carbGrams | number}}g</td>
+                    <td ng-class="{ green : vm.consumed.carbGrams <= vm.profileMacros.carbGoal, red : vm.consumed.carbGrams > vm.profileMacros.carbGoal }">
+                        {{ vm.consumed.carbGrams | number}}g
+                    </td>
                 </tr>
                 <tr>
                     <td>Protein</td>
                     <td>{{ vm.profileMacros.proteinGoal | number}}g</td>
-                    <td>{{ vm.consumed.proteinGrams | number}}g</td>
+                    <td ng-class="{ green : vm.consumed.proteinGrams <= vm.profileMacros.proteinGoal, red : vm.consumed.proteinGrams > vm.profileMacros.proteinGoal }">
+                        {{ vm.consumed.proteinGrams | number}}g
+                    </td>
                 </tr>
                 <tr>
                     <td>Fat</td>
                     <td>{{ vm.profileMacros.fatGoal | number}}g</td>
-                    <td>{{ vm.consumed.fatGrams | number}}g</td>
+                    <td ng-class="{ green : vm.consumed.fatGrams <= vm.profileMacros.fatGoal, red : vm.consumed.fatGrams > vm.profileMacros.fatGoal }">
+                        {{ vm.consumed.fatGrams | number}}g
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -4,6 +4,20 @@
     padding: 3px;
 }
 
+.validation-summary-errors ul {
+    list-style: none;
+    margin-left: -40px;
+    color: red;
+}
+
+.green {
+    color: lightgreen;
+}
+
+.red {
+    color: red;
+}
+
 .alert {
     color: slategray;
 }

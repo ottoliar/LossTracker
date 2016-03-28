@@ -3,35 +3,40 @@
         <a href="#/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i> Cancel</a>
     </div>
     <div class="col-md-5">
-        <h2>Create New Food</h2>
+        <h2>Create New Food (Required)</h2>
         <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
         <form novalidate name="createFoodForm" ng-submit="vm.createFood()">
             <div class="form-group">
                 <label>Food Description</label>
                 <input class="form-control" id="description" name="description" type="text"
-                       ng-model="vm.newFood.description" required/>
+                       ng-model="vm.newFood.description" ng-minlength="5" required/>
                 <span class="text-danger" ng-show="createFoodForm.description.$error.required"></span>
-
-                <label>Serving Size (Grams)</label>
+                <span class="text-danger" ng-show="createFoodForm.description.$error.minlength">Please make description >5 characters.</span>
+                <br />
+                <label>Serving Size</label>
                 <input class="form-control" id="servingSize" name="servingSize" type="number"
                        ng-model="vm.newFood.servingSize" ng-pattern="/^[0-9]+$/" required />
+                <select class="form-control" ng-model="vm.newFood.sizeUnit">
+                    <option selected value="grams">grams</option>
+                    <option value="oz">oz</option>
+                </select>
                 <span class="text-danger" ng-show="createFoodForm.servingSize.$error.pattern">Serving size must be positive integer.</span>
-
+                <br />
                 <label>Calories</label>
                 <input class="form-control" id="calories" name="calories" type="number"
                        ng-model="vm.newFood.calories" ng-pattern="/^[0-9]+$/" required />
                 <span class="text-danger" ng-show="createFoodForm.calories.$error.pattern">Calorie count must be positive integer.</span>
-
+                <br />
                 <label>Protein (Grams per Serving)</label>
                 <input class="form-control" id="proteinGrams" name="proteinGrams" type="number"
                        ng-model="vm.newFood.proteinGrams" ng-pattern="/^[0-9]+$/" required />
                 <span class="text-danger" ng-show="createFoodForm.proteinGrams.$error.pattern">Protein count must be positive integer.</span>
-
+                <br />
                 <label>Carbohydrates (Grams per Serving)</label>
                 <input class="form-control" id="carbGrams" name="carbGrams" type="number"
                        ng-model="vm.newFood.carbGrams" ng-pattern="/^[0-9]+$/" required />
                 <span class="text-danger" ng-show="createFoodForm.carbGrams.$error.pattern">Carb count must be positive integer.</span>
-
+                <br />
                 <label>Fat (Grams per Servings)</label>
                 <input class="form-control" id="fatGrams" name="fatGrams" type="number"
                        ng-model="vm.newFood.fatGrams" ng-pattern="/^[0-9]+$/" required />
@@ -44,18 +49,19 @@
     </div>
 
     <div class="col-md-5">
-        <h2>Optional: Add to Diary</h2>
+        <h2>Add to Diary (Optional)</h2>
         <form novalidate name="createFoodOptional">
             <label>Add</label>
             <input class="form-control" id="servings" name="servings" type="number"
-                   ng-model="vm.optional.servings" ng-pattern="/^[0-9]+(\.[0-9]{1})?$/" step="0.1"/>
-            <span class="text-danger" ng-show="createFoodOptional.$error.pattern">Serving size must be positive integer.</span>
+                   ng-model="vm.optional.servings" ng-pattern="/^[0-9]+(\.[0-9]{1})?$/" step="0.1" />
+            <span class="text-danger" ng-show="createFoodOptional.$error.pattern">Serving size must be positive number to one decimal point.</span>
+            <br />
             <label>serving(s) to</label>
-            <select class="form-control">
-                <option>Breakfast</option>
-                <option>Lunch</option>
-                <option>Dinner</option>
-                <option>Snacks</option>
+            <select class="form-control" ng-model="vm.optional.meal">
+                <option selected value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snacks">Snacks</option>
             </select>
         </form>
     </div>

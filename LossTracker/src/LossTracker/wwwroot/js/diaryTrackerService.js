@@ -105,7 +105,6 @@
                           // Add the entries to running totals
                           _sortEntry(entry, false, true);
                       });
-                      //return response.data;
                   });
         };
 
@@ -186,6 +185,37 @@
                         });
         };
 
+        // Create a new food in the database and optionally add it to today's diary
+        var createFood = function (newFood, options) {
+            if (options == null) {
+                return $http.post(foodApiUrl, JSON.stringify(newFood), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } else {
+                return $http.post(foodApiUrl, JSON.stringify(newFood), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function (response) {
+                    // Add the entry with the newly created food
+                    var foodId = response.data;
+                    var numServings = options.servings;
+
+                    if (options.meal === "breakfast")
+                        addDiaryEntry(foodId, numServings, 1);
+                    else if (options.meal === "lunch")
+                        addDiaryEntry(foodId, numServings, 2);
+                    else if (options.meal === "dinner")
+                        addDiaryEntry(foodId, numServings, 3);
+                    else
+                        addDiaryEntry(foodId, numServings, 4);
+                });
+            }
+        };
+
         // Delete entries from DB and their corresponding macros from our object tracker
         var deleteEntry = function (entry) {
             var numServings = entry.numberOfServings;
@@ -229,6 +259,7 @@
             getDinnerEntries: getDinnerEntries,
             getSnackEntries: getSnackEntries,
             addDiaryEntry: addDiaryEntry,
+            createFood: createFood,
             getSingleEntry: getSingleEntry,
             getLatestDiaryMacros: getLatestDiaryMacros,
             getEntriesForToday: getEntriesForToday,

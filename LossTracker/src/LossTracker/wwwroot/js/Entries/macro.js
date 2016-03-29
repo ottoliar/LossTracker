@@ -12,7 +12,7 @@
         return {
             restrict: 'A',
             replace: true,
-            templateUrl: '/views/diaryIndexMacro.html'
+            templateUrl: '/views/Entries/diaryIndexMacro.html'
         };
 
     }

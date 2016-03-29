@@ -51,6 +51,15 @@ thead tr td, .meal {
     background: grey;
 }
 
+#rectangle {
+    width: 750px;
+    height: 400px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: grey;
+}
+
 #diaryMain {
     position: fixed;
 }

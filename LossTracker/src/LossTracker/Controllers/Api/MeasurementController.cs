@@ -11,7 +11,7 @@ using System.Net;
 namespace LossTracker.Controllers.Api
 {
     [Authorize]
-    [Route("api/measurements")]
+    [Route("/api/measurements/")]
     public class MeasurementController : Controller
     {
         private ILogger<MeasurementController> _logger;

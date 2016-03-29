@@ -1,4 +1,4 @@
-// entry.js -- Directive returning a view for entries
+// entry.js -- Directive returning view for progress entries
 (function () {
 
     'use strict';
@@ -12,10 +12,8 @@
         return {
             restrict: 'A',
             replace: true,
-            templateUrl: '/views/diaryIndexEntry.html'
+            templateUrl: '/views/Progress/progressIndexEntry.html'
         };
-
     }
-
 
 })();

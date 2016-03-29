@@ -1,0 +1,38 @@
+<div class="col-md-4">
+    <h2>All Measurements</h2>
+    <div class="text-danger" ng-show="vm.error">{{ vm.error }}</div>
+
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr>
+                <td>Date</td>
+                <td>Weight (Lbs)</td>
+                <td>Inches (Waist)</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="measurement in vm.measurements">
+                <td>
+                   {{ measurement.created | date:'shortDate' }}
+                </td>
+                <td>
+                   {{ measurement.weightLbs | number }}
+                </td>
+                <td>
+                   {{ measurement.waistInches | number }}
+                </td>
+                <td>
+                    <a href="/" class="btn btn-danger btn-xs">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <a href="/" style="color: mediumseagreen; text-decoration: none;">
+                        Add <i class="fa fa-plus"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

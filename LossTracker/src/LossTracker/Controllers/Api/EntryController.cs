@@ -11,7 +11,7 @@ using System.Net;
 namespace LossTracker.Controllers.Api
 {
     [Authorize]
-    [Route("api/entries/{date}")]
+    [Route("/api/entries/{date}")]
     public class EntryController : Controller
     {
         private ILogger<EntryController> _logger;

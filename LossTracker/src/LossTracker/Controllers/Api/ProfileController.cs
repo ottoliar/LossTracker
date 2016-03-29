@@ -10,7 +10,7 @@ using System.Net;
 namespace LossTracker.Controllers.Api
 {
     [Authorize]
-    [Route("api/profile")]
+    [Route("/api/profile")]
     public class ProfileController : Controller
     {
         private ITrackerRepository _repository;

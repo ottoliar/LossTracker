@@ -1,4 +1,4 @@
-// entryController.js -- Display today's entries 
+// entryController.js -- Display today's food entries 
 (function () {
 
     'use strict';
@@ -6,7 +6,7 @@
     angular.module("appDiary")
         .controller("entryController", entryController);
 
-    function entryController($scope, $http, $filter, diaryTracker) {
+    function entryController($http, $filter, diaryTracker) {
 
         // Create the ViewModel
         var vm = this;

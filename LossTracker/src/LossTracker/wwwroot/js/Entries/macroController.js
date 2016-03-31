@@ -33,11 +33,16 @@
         $scope.$watch("vm.consumed", function (newValue, oldValue) {
             if (newValue == oldValue) return;
 
-            // Initialiaze pie chart graph with new values
-            $scope.labels = ["Carbohydrate", "Protein", "Fat"];
-            $scope.data = [vm.consumed.carbGrams, vm.consumed.proteinGrams, vm.consumed.fatGrams];
-            $scope.colours = ["#FF851B", "#001f3f", "#FF4136"];
-            $scope.options = { tooltipTemplate: "<%=label%>: <%=value%>g", animation: false };
+            // Initialiaze pie chart graph with values pulled from the service
+            vm.chartLabels = ["Carbohydrate", "Protein", "Fat"];
+            vm.data = [vm.consumed.carbGrams, vm.consumed.proteinGrams, vm.consumed.fatGrams];
+            vm.colours = ["#FF851B", "#001f3f", "#FF4136"];
+            vm.options = {
+                tooltipTemplate: "<%=label%>: <%=value%>g",
+                animation: true,
+                animationSteps: 120,
+                animationEasing: "easeOutElastic"
+            };
 
             if (vm.consumed.calories !== 0)
                 vm.noEntries = false;

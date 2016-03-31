@@ -7,7 +7,7 @@
     </div>
     <div ng-show="!vm.noEntries">
         <canvas id="doughnut" class="chart chart-pie"
-                chart-data="data" chart-labels="labels" chart-colours="colours" chart-options="options"></canvas>
+                chart-data="vm.data" chart-labels="vm.chartLabels" chart-colours="vm.colours" chart-options="vm.options"></canvas>
     </div>
     <div id="macroTable">
         <table class="table table-striped">

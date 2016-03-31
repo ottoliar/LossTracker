@@ -4,10 +4,11 @@
 
     'use strict';
 
-    var weightTracker = function ($http) {
+    var weightTracker = function ($http, $rootScope) {
 
         var measurementApi = "/api/measurements/";
 
+        // Hold measurements pulled from the database
         var measurements = [];
 
         // Make an API call to get all of the user's measurements
@@ -23,9 +24,20 @@
             return measurements;
         }
 
+        // Post the new measurement to the database via API and update the array
+        function addMeasurement() {
+
+            $rootScope.$emit('measurementArrayModified');
+        }
+
         return {
             fetchMeasurements: fetchMeasurements,
-            getMeasurements: getMeasurements
+            getMeasurements: getMeasurements,
+            addMeasurement: addMeasurement,
+            subscribe: function (scope, callback) {
+                var handler = $rootScope.$on('measurementArrayModified', callback);
+                //scope.$on('$destroy', handler);
+            }
         };
     };
 

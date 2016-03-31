@@ -1,32 +1,12 @@
-<div class="col-md-7">
-    <h2>Weight Progress</h2>
+<div class="col-md-6">
+    <h2>Waist</h2>
     <div ng-show="vm.noEntries">
         <center>
-            <div id="rectangle"></div>
+            <div class="rectangle"></div>
         </center>
     </div>
     <div ng-show="!vm.noEntries">
-        <canvas id="line" class="chart chart-line"
-                chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-    </div>
-    <div id="progressTable">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>High Weight</td>
-                    <td>Current (Last) Weight</td>
-                    <td>Change</td>
-                    <td>Goal Weight</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                </tr>
-            </tbody>
-        </table>
+        <canvas id="lineWaist" class="chart chart-line" chart-options="vm.waistOptions"
+                chart-data="vm.waistData" chart-labels="vm.waistChartLabels" chart-colours="vm.waistColours"></canvas>
     </div>
 </div>

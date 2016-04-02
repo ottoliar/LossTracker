@@ -1,0 +1,36 @@
+<div class="col-md-6">
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <div id="waistGraph">
+        <h4>Waist</h4>
+        <div ng-show="vm.noEntries" ng-cloak>
+            <center>
+                <div class="rectangle"></div>
+            </center>
+        </div>
+        <div ng-show="!vm.noEntries" ng-cloak>
+            <canvas id="lineWaist" class="chart chart-line" chart-options="vm.waistOptions"
+                    chart-data="vm.waistData" chart-labels="vm.waistChartLabels" chart-colours="vm.waistColours"></canvas>
+        </div>
+     </div>
+    <div id="newMeasurementForm">
+        <h4>Add New Measurement</h4>
+        <form novalidate name="addMeasurementForm" ng-submit="vm.addEntry()">
+            <div class="form-group">
+                <label>Weight (lbs)</label>
+                <input class="form-control" id="weight" name="weight" type="number"
+                       ng-model="vm.newMeasurement.weightLbs" ng-pattern="/^[0-9]+$/" required />
+                <span class="text-danger" ng-show="addMeasurementForm.weight.$error.required"></span>
+                <span class="text-danger" ng-show="addMeasurementForm.weight.$error.pattern">Please enter a positive integer</span>
+                <br />
+                <label>Waist (inches)</label>
+                <input class="form-control" id="waist" name="waist" type="number"
+                        ng-model="vm.newMeasurement.waistInches" ng-pattern="/^[0-9]+$/" required />
+                <span class="text-danger" ng-show="addMeasurementForm.weight.$error.required"></span>
+                <span class="text-danger" ng-show="addMeasurementForm.waist.$error.pattern">Please enter a positive integer</span>
+            </div>
+            <div>
+                <input type="submit" value="Add Measurement" class="btn btn-success" ng-disabled="addMeasurementForm.$invalid" />
+            </div>
+        </form>
+    </div>
+</div>

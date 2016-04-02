@@ -6,43 +6,45 @@
         <h2>Food Search</h2>
         <input ng-model="search" ng-model-options="{ debounce: 500 }" onclick="select()" class="form-control" type="text" placeholder="Search Food..." />
         <span id="searchbar" class="fa fa-search"></span>
-        <table class="table table-responsive table-striped">
-            <tr>
-                <wait-cursor ng-show="vm.searchIsBusy"></wait-cursor>
-            </tr>
-            <tr ng-repeat="food in vm.searchResults">
-                <td class="hideId">{{ food.id }}</td>
-                <td>{{ food.description }}</td>
-                <td>
-                    <i>Calories: </i> {{ food.calories | number }}
-                </td>
-                <td>
-                    <i>Protein: </i> {{ food.proteinGrams | number }}g
-                </td>
-                <td>
-                    <i>Carbohydrates: </i> {{ food.carbGrams | number }}g
-                </td>
-                <td>
-                    <i>Fat: </i> {{ food.fatGrams | number }}g
-                </td>
-                <td>
-                    <button class="btn btn-success btn-xs" ng-click="vm.addDiaryEntry(food.id)">
-                        Add
-                    </button>
-                </td>
-            </tr>
-            <tr ng-show="vm.noResultFound">
-                <td>
-                    <h3>
-                        No foods found. Create a new food?
-                    </h3>
-                </td>
-                <td>
-                    <a href="#/create" class="btn btn-primary btn-lg">
-                        Create
-                    </a>
-                </td>
-            </tr>
-        </table>
+        <div id="resultsTable">
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <wait-cursor ng-show="vm.searchIsBusy"></wait-cursor>
+                </tr>
+                <tr ng-repeat="food in vm.searchResults">
+                    <td class="hideId">{{ food.id }}</td>
+                    <td>{{ food.description }}</td>
+                    <td>
+                        <i>Calories: </i> {{ food.calories | number }}
+                    </td>
+                    <td>
+                        <i>Protein: </i> {{ food.proteinGrams | number }}g
+                    </td>
+                    <td>
+                        <i>Carbohydrates: </i> {{ food.carbGrams | number }}g
+                    </td>
+                    <td>
+                        <i>Fat: </i> {{ food.fatGrams | number }}g
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-xs" ng-click="vm.addDiaryEntry(food.id)">
+                            Add
+                        </button>
+                    </td>
+                </tr>
+                <tr ng-show="vm.noResultFound">
+                    <td>
+                        <h3>
+                            No foods found. Create a new food?
+                        </h3>
+                    </td>
+                    <td>
+                        <a href="#/create" class="btn btn-primary btn-lg">
+                            Create
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

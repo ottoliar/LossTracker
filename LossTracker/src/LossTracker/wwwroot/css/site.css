@@ -52,7 +52,7 @@ thead tr td, .meal {
 }
 
 .rectangle {
-    width: 615px;
+    width: 550px;
     height: 310px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -62,6 +62,16 @@ thead tr td, .meal {
 
 #diaryMain {
     position: fixed;
+}
+
+#entryTable {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+#resultsTable {
+    max-height: 600px;
+    overflow-y: scroll;
 }
 
 #searchbar {

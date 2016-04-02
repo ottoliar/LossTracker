@@ -1,0 +1,48 @@
+<div class="col-md-6">
+    <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+    <div class="text-danger" ng-show="vm.error">{{ vm.error }}</div>
+    <div id="weightGraph">
+        <h4>Weight</h4>
+        <div ng-show="vm.noEntries" ng-cloak>
+            <center>
+                <div class="rectangle"></div>
+            </center>
+        </div>
+        <div ng-show="!vm.noEntries" ng-cloak>
+            <canvas id="lineWeight" class="chart chart-line" chart-options="vm.weightOptions"
+                    chart-data="vm.weightData" chart-labels="vm.weightChartLabels" chart-colours="vm.weightColours"></canvas>
+        </div>
+    </div>
+    <div id="measurementsList">
+        <h4>All Measurements</h4>
+        <div id="entryTable">
+            <table class="table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Weight (Lbs)</td>
+                        <td>Inches (Waist)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="measurement in vm.measurements | orderBy:'-created'">
+                        <td>
+                           {{ measurement.created | date:'shortDate' }}
+                        </td>
+                        <td>
+                           {{ measurement.weightLbs | number }}
+                        </td>
+                        <td>
+                           {{ measurement.waistInches | number }}
+                        </td>
+                        <td>
+                            <btn class="btn btn-danger btn-xs" ng-click="vm.deleteEntry(measurement.id)">
+                                Delete <i class="fa fa-minus"></i>
+                            </btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

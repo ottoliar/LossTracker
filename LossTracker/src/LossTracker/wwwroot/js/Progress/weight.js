@@ -12,7 +12,7 @@
         return {
             restrict: 'A',
             replace: true,
-            templateUrl: '/views/Progress/progressIndexWeight.html'
+            templateUrl: '/views/Progress/progressIndexWaistForm.html'
         };
     }
 

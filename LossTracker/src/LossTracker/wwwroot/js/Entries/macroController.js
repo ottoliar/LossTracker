@@ -28,7 +28,7 @@
             });
         }
 
-        // Watch the shared service to see when new entries are added
+        // Watch the shared service to see when new entries are added/deleted
         // Update the chart accordingly
         $scope.$watch("vm.consumed", function (newValue, oldValue) {
             if (newValue == oldValue) return;
@@ -39,9 +39,7 @@
             vm.colours = ["#FF851B", "#001f3f", "#FF4136"];
             vm.options = {
                 tooltipTemplate: "<%=label%>: <%=value%>g",
-                animation: true,
-                animationSteps: 120,
-                animationEasing: "easeOutElastic"
+                animation: false
             };
 
             if (vm.consumed.calories !== 0)

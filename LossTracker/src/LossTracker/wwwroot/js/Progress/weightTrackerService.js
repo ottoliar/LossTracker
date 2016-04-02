@@ -6,14 +6,15 @@
 
     var weightTracker = function ($http, $rootScope) {
 
-        var measurementApi = "/api/measurements/";
+        var measurementApiUrl = "/api/measurements/";
+        var deletionApiUrl = "/api/delete/measurements/";
 
         // Hold measurements pulled from the database
         var measurements = [];
 
         // Make an API call to get all of the user's measurements
         function fetchMeasurements() {
-            return $http.get(measurementApi)
+            return $http.get(measurementApiUrl)
                         .then(function (response) {
                             angular.copy(response.data, measurements);
                         });
@@ -25,19 +26,38 @@
         }
 
         // Post the new measurement to the database via API and update the array
-        function addMeasurement() {
+        function addMeasurement(weight, waist) {
+            var newMeasurement = {
+                weightLbs: weight,
+                waistInches: waist
+            };
+            $http.post(measurementApiUrl, JSON.stringify(newMeasurement))
+                    .then(function (response) {
+                        measurements.push(response.data);
+                        $rootScope.$broadcast('measurementAdded');
+                    });
+        }
 
-            $rootScope.$emit('measurementArrayModified');
+        // Delete the new measurement from the database and update the chart
+        function deleteMeasurement(id) {
+            var completeDeletionUrl = deletionApiUrl + id;
+            return $http.post(completeDeletionUrl)
+                        .then(function () {
+                            for (var i = 0; i < measurements.length; i++) {
+                                var current = measurements[i];
+                                if (current.id === id) {
+                                    measurements.splice(i, 1);
+                                }
+                            }
+                            $rootScope.$broadcast('measurementDeleted', id);
+                        });
         }
 
         return {
             fetchMeasurements: fetchMeasurements,
             getMeasurements: getMeasurements,
             addMeasurement: addMeasurement,
-            subscribe: function (scope, callback) {
-                var handler = $rootScope.$on('measurementArrayModified', callback);
-                //scope.$on('$destroy', handler);
-            }
+            deleteMeasurement: deleteMeasurement
         };
     };
 

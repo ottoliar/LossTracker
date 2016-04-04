@@ -1,0 +1,1 @@
+!function(){var a=$("#sidebar,#wrapper"),e=$("#sidebar_toggle i");$("#sidebar_toggle").on("click",function(){a.toggleClass("hide-sidebar"),a.hasClass("hide-sidebar")?(e.removeClass("fa fa-angle-left"),e.addClass("fa fa-angle-right")):(e.removeClass("fa fa-angle-right"),e.addClass("fa fa-angle-left"))})}();

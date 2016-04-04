@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("appProgress",["ngAnimate","mgcrea.ngStrap","simpleControls","entry","weight","chart.js","ngRoute"]).config(function(e,r){e.when("/",{templateUrl:"/views/Progress/progressIndex.html"}),e.otherwise({redirectTo:"/"})})}();

@@ -1,0 +1,1 @@
+!function(){"use strict";function e(){return{restrict:"A",replace:!0,templateUrl:"/views/Entries/diaryIndexEntry.html"}}angular.module("entry",[]).directive("entry",e)}();

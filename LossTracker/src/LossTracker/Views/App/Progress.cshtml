@@ -8,12 +8,22 @@
     <script src="~/lib/angular-strap/dist/angular-strap.min.js"></script>
     <script src="~/lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <script src="~/lib/angular-route/angular-route.min.js"></script>
-    <script src="~/js/simpleControls.js"></script>
-    <script src="~/js/Progress/entry.js"></script>
-    <script src="~/js/Progress/weight.js"></script>
-    <script src="~/js/Progress/appProgress.js"></script>
-    <script src="~/js/Progress/weightTrackerService.js"></script>
-    <script src="~/js/Progress/entryWeightController.js"></script>
+    <environment names="Development">
+        <script src="~/js/simpleControls.js"></script>
+        <script src="~/js/Progress/entry.js"></script>
+        <script src="~/js/Progress/weight.js"></script>
+        <script src="~/js/Progress/appProgress.js"></script>
+        <script src="~/js/Progress/weightTrackerService.js"></script>
+        <script src="~/js/Progress/entryWeightController.js"></script>
+    </environment>
+    <environment names="Production,Staging">
+        <script src="~/lib/_app/simpleControls.js"></script>
+        <script src="~/lib/_app/Progress/entry.js"></script>
+        <script src="~/lib/_app/Progress/weight.js"></script>
+        <script src="~/lib/_app/Progress/appProgress.js"></script>
+        <script src="~/lib/_app/Progress/weightTrackerService.js"></script>
+        <script src="~/lib/_app/Progress/entryWeightController.js"></script>
+    </environment>
     <script src="~/lib/Chart.js/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.min.js"></script>
 }

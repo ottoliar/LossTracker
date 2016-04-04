@@ -84,9 +84,19 @@ namespace LossTracker
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, TrackerContextSeedData seeder, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, TrackerContextSeedData seeder, 
+            ILoggerFactory loggerFactory, IHostingEnvironment env)
         {
-            loggerFactory.AddDebug(LogLevel.Warning);
+            if (env.IsDevelopment())
+            {
+                loggerFactory.AddDebug(LogLevel.Information);
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                loggerFactory.AddDebug(LogLevel.Error);
+                app.UseExceptionHandler("/App/Error");
+            }
 
             app.UseStaticFiles();
 

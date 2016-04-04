@@ -7,7 +7,7 @@
 .profileImage {
     border: 1px solid #222;
     padding: 3px;
-    max-height: 250px;
+    max-height: 150px;
 }
 
 .validation-summary-errors ul {
@@ -46,6 +46,10 @@
 
 thead tr td, .meal {
     color: coral;
+}
+
+input[type="submit"] {
+    margin-bottom: 75px;
 }
 
 #circle {

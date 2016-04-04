@@ -34,7 +34,7 @@
             $http.post(measurementApiUrl, JSON.stringify(newMeasurement))
                     .then(function (response) {
                         measurements.push(response.data);
-                        $rootScope.$broadcast('measurementAdded');
+                        $rootScope.$broadcast('measurementAdded', response.data);
                     });
         }
 

@@ -57,11 +57,16 @@ namespace LossTracker.Models
                     Entries = new List<DiaryEntry>()
                 };
 
-                var seedMeasurement = new Measurement()
+                var seedMeasurements = new List<Measurement>
                 {
-                    Created = Convert.ToDateTime("01/04/2016"),
-                    WeightLbs = 205,
-                    WaistInches = 38
+                    new Measurement() { Created = Convert.ToDateTime("01/24/2016"), WeightLbs = 206, WaistInches = 38 },
+                    new Measurement() { Created = Convert.ToDateTime("01/30/2016"), WeightLbs = 203, WaistInches = 38 },
+                    new Measurement() { Created = Convert.ToDateTime("02/12/2016"), WeightLbs = 199, WaistInches = 37 },
+                    new Measurement() { Created = Convert.ToDateTime("02/19/2016"), WeightLbs = 197, WaistInches = 36 },
+                    new Measurement() { Created = Convert.ToDateTime("02/27/2016"), WeightLbs = 197, WaistInches = 36 },
+                    new Measurement() { Created = Convert.ToDateTime("03/04/2016"), WeightLbs = 195, WaistInches = 36 },
+                    new Measurement() { Created = Convert.ToDateTime("03/14/2016"), WeightLbs = 194, WaistInches = 36 },
+                    new Measurement() { Created = Convert.ToDateTime("03/31/2016"), WeightLbs = 190, WaistInches = 35 }
                 };
 
                 var seedEntry = new DiaryEntry()
@@ -73,7 +78,11 @@ namespace LossTracker.Models
                     Food = _context.Foods.Where(f => f.Id == 1).FirstOrDefault()
                 };
 
-                seedProfile.Measurements.Add(seedMeasurement);
+                foreach (var measurement in seedMeasurements)
+                {
+                    seedProfile.Measurements.Add(measurement);
+                }
+
                 seedProfile.Entries.Add(seedEntry);
 
                  _context.Profiles.Add(seedProfile);

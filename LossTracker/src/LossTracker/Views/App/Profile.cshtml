@@ -1,0 +1,63 @@
+@{
+    ViewBag.Title = "Profile";
+}
+
+@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="~/lib/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="~/lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="~/js/simpleControls.js"></script>
+    <script src="~/js/Profile/appProfile.js"></script>
+    <script src="~/js/Profile/profileController.js"></script>
+}
+
+<div class="row" ng-app="appProfile">
+
+    <div ng-controller="profileController as vm">
+        <div class="col-md-3">
+            <wait-cursor ng-show="vm.loadIsBusy"></wait-cursor>
+            <div>
+                <center>
+                    <h2>@User.Identity.Name</h2>
+                    <img alt="profileImage" class="profileImage" src="~/img/robert.jpg" />
+                </center>
+            </div>
+            <form novalidate ng="modifyProfileForm" ng-submit="vm.modifyProfile()">
+                <div class="form-group">
+                    <label>Calorie Goal</label>
+                    <input class="form-control" id="calorieGoal" name="calorieGoal" type="number" step="100"
+                           ng-model="vm.userProfile.calorieGoal" ng-pattern="/^[0-9]+$/" ng-click="vm.click()" required />
+                    <span class="text-danger" ng-show="modifyProfileForm.calorieGoal.$error.pattern">
+                        Please enter a positive integer.
+                    </span>
+                    <br />
+                    <label>Protein Goal (grams)</label>
+                    <input class="form-control" id="proteinGoal" name="proteinGoal" type="number" step="10"
+                           ng-model="vm.userProfile.proteinGoal" ng-pattern="/^[0-9]+$/" ng-click="vm.click()" required />
+                    <span class="text-danger" ng-show="modifyProfileForm.proteinGoal.$error.pattern">
+                        Please enter a positive integer.
+                    </span>
+                    <br />
+                    <label>Carb Goal (grams)</label>
+                    <input class="form-control" id="carbGoal" name="carbGoal" type="number" step="10"
+                           ng-model="vm.userProfile.carbGoal" ng-pattern="/^[0-9]+$/" ng-click="vm.click()" required />
+                    <span class="text-danger" ng-show="modifyProfileForm.carbGoal.$error.pattern">
+                        Please enter a positive integer.
+                    </span>
+                    <br />
+                    <label>Fat Goal (grams)</label>
+                    <input class="form-control" id="fatGoal" name="fatGoal" type="number" step="10"
+                           ng-model="vm.userProfile.fatGoal" ng-pattern="/^[0-9]+$/" ng-click="vm.click()" required />
+                    <span class="text-danger" ng-show="modifyProfileForm.fatGoal.$error.pattern">
+                        Please enter a positive integer.
+                    </span>
+                </div>
+                <div>
+                    <input type="submit" value="Modify Profile" class="btn btn-success" ng-disabled="modifyProfileForm.$invalid || vm.disabled" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

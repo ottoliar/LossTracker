@@ -4,7 +4,6 @@
 <head>
     <title>LossTracker - @ViewBag.title</title>
     <meta charset="utf-8" />
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="~/lib/bootswatch/superhero/bootstrap.min.css"/>
     <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/libs.min.css" />
@@ -12,13 +11,15 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="~/img/favicon.ico" type="image/ico" />
 </head>
 
 <body>
     <div id="sidebar">
         @if (User.Identity.IsAuthenticated)
         {
-            <img src="~/img/me.jpg" alt="headshot" class="headshot" />
+            <img src="~/img/robert.jpg" alt="headshot" class="headshot" />
             <span id="username">@User.Identity.Name</span>
         }
         <ul class="nav">
@@ -27,7 +28,7 @@
             {
                 <li><a asp-controller="App" asp-action="Entries">Food Diary</a></li>
                 <li><a asp-controller="App" asp-action="Progress">Progress</a></li>
-                <li><a asp-controller="App" asp-action="Goals">Profile</a></li>
+                <li><a asp-controller="App" asp-action="Profile">Profile</a></li>
                 <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
             }
         </ul>
@@ -56,7 +57,6 @@
         </nav>
 
         <div id="main" class="container-fluid">
-
             <div>
                 @RenderBody()
             </div>

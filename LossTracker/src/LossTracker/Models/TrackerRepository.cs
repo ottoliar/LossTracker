@@ -79,14 +79,10 @@ namespace LossTracker.Models
             }
             else
             {
-                //foreach (PropertyInfo propertyInfo in oldProfile.GetType().GetProperties())
-                //{
-                //    // Update all fields except ID/UserName
-                //    if (propertyInfo.Name != "Id" && propertyInfo.Name != "UserName")
-                //    {
-                //        propertyInfo.SetValue(oldProfile, propertyInfo.GetValue(newProfile));
-                //    }
-                //}
+                oldProfile.CalorieGoal = newProfile.CalorieGoal;
+                oldProfile.ProteinGoal = newProfile.ProteinGoal;
+                oldProfile.CarbGoal = newProfile.CarbGoal;
+                oldProfile.FatGoal = newProfile.FatGoal;
             }
         }
 

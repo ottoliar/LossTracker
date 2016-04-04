@@ -4,6 +4,12 @@
     padding: 3px;
 }
 
+.profileImage {
+    border: 1px solid #222;
+    padding: 3px;
+    max-height: 250px;
+}
+
 .validation-summary-errors ul {
     list-style: none;
     margin-left: -40px;

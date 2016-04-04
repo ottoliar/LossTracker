@@ -34,7 +34,7 @@ namespace LossTracker.Controllers
             return View();
         }
 
-        public IActionResult Goals()
+        public IActionResult Profile()
         {
             return View();
         }

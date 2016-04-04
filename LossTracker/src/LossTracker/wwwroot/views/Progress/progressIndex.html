@@ -1,4 +1,9 @@
 <div ng-controller="entryWeightController as vm">
-    <div entry></div>
-    <div weight></div>
+    <div ng-show="vm.loadIsBusy">
+        <div wait-cursor></div>
+    </div>
+    <div ng-show="!vm.loadIsBusy">
+        <div entry></div>
+        <div weight></div>
+    </div>
 </div>

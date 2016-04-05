@@ -3,7 +3,11 @@
 	"name": "LossTracker",
 	"private": true,
   "devDependencies": {
+<<<<<<< HEAD
     "gulp": "~3.9.1",
+=======
+    "gulp": "~3.9.0",
+>>>>>>> 9f6f8a9c883039aa276720f1289d06efc0d998df
     "gulp-uglify": "~1.4.1",
     "gulp-ng-annotate": "~1.1.0"
   }

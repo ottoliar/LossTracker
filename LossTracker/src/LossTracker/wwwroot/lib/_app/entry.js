@@ -1,0 +1,1 @@
+!function(){"use strict";function e(){return{restrict:"A",replace:!0,templateUrl:"/views/Progress/progressIndexWeightMeasurements.html"}}angular.module("entry",[]).directive("entry",e)}();

@@ -16,7 +16,7 @@
                 <span class="text-danger" ng-show="editEntryForm.servings.$error.pattern">Must have >0 serving(s)</span>
             </div>
             <div>
-                <input type="submit" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid && !vm.isDisabled" />
+                <input id="saveSubmit" type="submit" value="Save" class="btn btn-success" ng-disabled="editEntryForm.$invalid && !vm.isDisabled" />
                 <button type="button" ng-disabled="vm.isDisabled" class="btn btn-danger" ng-click="vm.deleteEntry(vm.currentEntry)">Delete Entry</button>
             </div>
         </form>

@@ -52,21 +52,21 @@ input[type="submit"] {
     margin-bottom: 75px;
 }
 
-#circle {
-    width: 250px;
-    height: 250px;
-    -webkit-border-radius: 125px;
-    -moz-border-radius: 125px;
-    border-radius: 125px;
-    background: grey;
-}
-
 .rectangle {
     width: 550px;
     height: 310px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    background: grey;
+}
+
+#circle {
+    width: 250px;
+    height: 250px;
+    -webkit-border-radius: 125px;
+    -moz-border-radius: 125px;
+    border-radius: 125px;
     background: grey;
 }
 
@@ -84,6 +84,11 @@ input[type="submit"] {
     overflow-y: scroll;
 }
 
+#entriesIndex {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
 #searchbar {
     float: right;
     margin-right: 6px;
@@ -91,6 +96,10 @@ input[type="submit"] {
     position: relative;
     z-index: 2;
     color: coral;
+}
+
+#saveSubmit {
+    margin-bottom: 0;
 }
 
 input[placeholder] {

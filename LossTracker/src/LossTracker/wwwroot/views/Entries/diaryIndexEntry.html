@@ -9,7 +9,7 @@
         <tr ng-repeat="entry in vm.breakfast">
             <td>{{ entry.food.description }}</td>
             <td>
-                <i>Servings: </i> {{ entry.numberOfServings| number }}
+                <i>Servings: </i> {{ entry.numberOfServings | number }}
             </td>
             <td>
                 <i>Calories: </i> {{ entry.food.calories*entry.numberOfServings | number }}
@@ -108,7 +108,7 @@
         <tr ng-repeat="entry in vm.snacks">
             <td>{{ entry.food.description }}</td>
             <td>
-                <i>Servings: </i> {{ entry.numberOfServings*entry.numberOfServings | number}}
+                <i>Servings: </i> {{ entry.numberOfServings | number}}
             </td>
             <td>
                 <i>Calories: </i> {{ entry.food.calories*entry.numberOfServings | number }}

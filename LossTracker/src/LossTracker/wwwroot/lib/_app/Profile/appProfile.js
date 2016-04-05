@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("appProfile",["ngAnimate","mgcrea.ngStrap","simpleControls"])}();

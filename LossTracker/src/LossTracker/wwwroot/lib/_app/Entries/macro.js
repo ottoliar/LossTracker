@@ -1,0 +1,1 @@
+!function(){"use strict";function r(){return{restrict:"A",replace:!0,templateUrl:"/views/Entries/diaryIndexMacro.html"}}angular.module("macro",[]).directive("macro",r)}();

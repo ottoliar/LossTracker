@@ -18,6 +18,6 @@ namespace LossTracker.ViewModels
 
         public Food Food { get; set; }
 
-        public DateTime Day { get; set; } = DateTime.Today.Date;
+        public DateTime Day { get; set; } = DateTime.Now.Date;
     }
 }

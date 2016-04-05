@@ -13,6 +13,6 @@ namespace LossTracker.ViewModels
         [Required]
         public double WaistInches { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.UtcNow.Date;
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }

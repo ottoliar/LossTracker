@@ -9,18 +9,18 @@ the server-side and making the API that would link it to the client.
 
 ScreenShots - 
 Login Forms:
-![login](http://imgur.com/whJlXTw)
+![login](http://i.imgur.com/whJlXTw.png)
 
 Food/Calorie Tracking:
-![tracker](http://imgur.com/v3GXQKC)
+![tracker](http://i.imgur.com/v3GXQKC.png)
 
 Food Search:
-![search](http://imgur.com/lYOyhuC)
+![search](http://i.imgur.com/lYOyhuC.png)
 
 Entry Manage:
-![manage](http://imgur.com/3iHfPgZ)
+![manage](http://i.imgur.com/3iHfPgZ.png)
 
 Profile Page:
-![profile](http://imgur.com/OrXvqoj)
+![profile](http://i.imgur.com/OrXvqoj.png)
 
 
